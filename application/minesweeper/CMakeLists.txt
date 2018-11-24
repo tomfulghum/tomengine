@@ -1,15 +1,9 @@
 project(minesweeper)
 
-set(RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/minesweeper")
-
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 add_executable(minesweeper
     ${SOURCES}
 )
-
-#target_include_directories(minesweeper PUBLIC
-#    "${CMAKE_SOURCE_DIR}/include"
-#)
 
 target_link_libraries(minesweeper tomengine)
 

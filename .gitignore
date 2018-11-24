@@ -1,7 +1,2 @@
 build/*
 .vscode/settings.json
-
-external/glfw-3.2.1/build/*
-external/glfw-3.2.1/docs/*
-external/glfw-3.2.1/examples/*
-external/glfw-3.2.1/tests/*

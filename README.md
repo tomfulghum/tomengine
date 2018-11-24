@@ -1,1 +1,1 @@
-minesweeper
+Small OpenGL game engine and projects.
