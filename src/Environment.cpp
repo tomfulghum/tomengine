@@ -3,6 +3,7 @@
 using namespace tomengine;
 
 // Initialize static variables
+Application* Environment::App;
 GLFWwindow* Environment::Window;
 int Environment::WindowWidth = 800;
 int Environment::WindowHeight = 600;
@@ -14,6 +15,11 @@ bool Environment::Keys[1024];
 bool Environment::GetKey(int pKey)
 {
     return Keys[pKey];
+}
+
+void Environment::SetApplication(Application* pApp)
+{
+    App = pApp;
 }
 
 void Environment::SetWindowDimensions(int pWidth, int pHeight)
@@ -40,7 +46,7 @@ int Environment::Initialize()
     Window = glfwCreateWindow(WindowWidth, WindowHeight, WindowTitle.c_str(), NULL, NULL);
     if (Window == NULL)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        std::cout << "ERROR::Environment: Failed to create GLFW window." << std::endl;
         glfwTerminate();
         return -1;
     }
@@ -49,7 +55,7 @@ int Environment::Initialize()
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        std::cout << "ERROR::Environment: Failed to initialize GLAD." << std::endl;
         return -1;
     }
 
@@ -61,8 +67,10 @@ int Environment::Initialize()
     glfwSetKeyCallback(Window, KeyCallback);
     glfwSetFramebufferSizeCallback(Window, FramebufferSizeCallback);
 
-    LastFrameTime = 0.0f;
-    DeltaTime = 0.0f;
+    if (App)
+    {
+        App->Initialize();
+    }
 
     return 0;
 }
@@ -78,6 +86,12 @@ void Environment::Update()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        if (App)
+        {
+            App->Update();
+            App->Render();
+        }
+
         glfwPollEvents();
         glfwSwapBuffers(Window);
     }
@@ -85,6 +99,10 @@ void Environment::Update()
 
 void Environment::Terminate()
 {
+    if (App)
+    {
+        App->Terminate();
+    }
     glfwTerminate();
 }
 

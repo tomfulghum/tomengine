@@ -14,13 +14,14 @@ namespace tomengine
     class Environment
     {
         public:
-        //static Application App;
+        static Application* App;
 
         static int GetWindowWidth() { return WindowWidth; }
         static int GetWindowHeight() { return WindowHeight; }
         static float GetDeltaTime() { return DeltaTime; }
         static bool GetKey(int pKey);
         
+        static void SetApplication(Application* pApp);
         static void SetWindowDimensions(int pWidth, int pHeight);
         static void SetWindowTitle(const std::string &pTitle);
 
