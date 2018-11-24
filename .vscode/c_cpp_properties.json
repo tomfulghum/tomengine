@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/external/include",
+                "${workspaceFolder}/external/glad/include",
+                "${workspaceFolder}/external/glfw-3.2.1/include",
+                "${workspaceFolder}/external/glm-0.9.9.3/include"
+            ],
+            "defines": [],
+            "compilerPath": "/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
