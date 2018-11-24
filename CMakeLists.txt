@@ -29,10 +29,4 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/application")
 
 target_link_libraries(tomengine
     glfw
-    GL
-    X11
-    pthread
-    Xrandr
-    Xi
-    dl
 )
