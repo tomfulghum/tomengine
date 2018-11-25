@@ -32,7 +32,7 @@ void Environment::SetWindowDimensions(int pWidth, int pHeight)
     }
 }
 
-void Environment::SetWindowTitle(const std::string &pTitle)
+void Environment::SetWindowTitle(const std::string& pTitle)
 {
     WindowTitle = pTitle;
 }

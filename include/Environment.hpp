@@ -10,37 +10,37 @@
 
 namespace tomengine
 {
-    class Environment
-    {
-        public:
-        static Application* App;
+class Environment
+{
+public:
+    static Application* App;
 
-        static int GetWindowWidth() { return WindowWidth; }
-        static int GetWindowHeight() { return WindowHeight; }
-        static float GetDeltaTime() { return DeltaTime; }
-        static bool GetKey(int pKey);
-        
-        static void SetApplication(Application* pApp);
-        static void SetWindowDimensions(int pWidth, int pHeight);
-        static void SetWindowTitle(const std::string &pTitle);
+    static int GetWindowWidth() { return WindowWidth; }
+    static int GetWindowHeight() { return WindowHeight; }
+    static float GetDeltaTime() { return DeltaTime; }
+    static bool GetKey(int pKey);
 
-        static int Initialize();
-        static void Update();
-        static void Terminate();
+    static void SetApplication(Application* pApp);
+    static void SetWindowDimensions(int pWidth, int pHeight);
+    static void SetWindowTitle(const std::string& pTitle);
 
-        private:
-        static GLFWwindow* Window;
-        static int WindowWidth;
-        static int WindowHeight;
-        static std::string WindowTitle;
-        static float LastFrameTime;
-        static float DeltaTime;
-        static bool Keys[1024];
+    static int Initialize();
+    static void Update();
+    static void Terminate();
 
-        static void SetKey(int pKey, bool pPressed);
-        static void KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMode);
-        static void FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
-    };
-} // tomengine
+private:
+    static GLFWwindow* Window;
+    static int WindowWidth;
+    static int WindowHeight;
+    static std::string WindowTitle;
+    static float LastFrameTime;
+    static float DeltaTime;
+    static bool Keys[1024];
+
+    static void SetKey(int pKey, bool pPressed);
+    static void KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMode);
+    static void FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
+};
+} // namespace tomengine
 
 #endif

@@ -2,7 +2,7 @@
 
 using namespace tomengine;
 
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
     Environment::Initialize();
     Environment::Update();

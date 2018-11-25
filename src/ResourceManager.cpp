@@ -13,24 +13,24 @@ using namespace tomengine;
 std::map<std::string, Shader> ResourceManager::Shaders;
 std::map<std::string, Texture2D> ResourceManager::Textures;
 
-Shader ResourceManager::LoadShader(const std::string &pVertShaderFile, const std::string &pFragShaderFile, const std::string &pGeomShaderFile, const std::string &pName)
+Shader ResourceManager::LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName)
 {
     Shaders[pName] = LoadShaderFromFile(pVertShaderFile, pFragShaderFile, pGeomShaderFile);
     return Shaders[pName];
 }
 
-Shader& ResourceManager::GetShader(const std::string &pName)
+Shader& ResourceManager::GetShader(const std::string& pName)
 {
     return Shaders[pName];
 }
 
-Texture2D ResourceManager::LoadTexture2D(const std::string &pFile, const std::string &pName)
+Texture2D ResourceManager::LoadTexture2D(const std::string& pFile, const std::string& pName)
 {
     Textures[pName] = LoadTexture2DFromFile(pFile);
     return Textures[pName];
 }
 
-Texture2D& ResourceManager::GetTexture2D(const std::string &pName)
+Texture2D& ResourceManager::GetTexture2D(const std::string& pName)
 {
     return Textures[pName];
 }
@@ -50,7 +50,7 @@ void ResourceManager::Clear()
     Textures.clear();
 }
 
-Shader ResourceManager::LoadShaderFromFile(const std::string &pVertShaderFile, const std::string &pFragShaderFile, const std::string &pGeomShaderFile)
+Shader ResourceManager::LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
 {
     std::string vertexSourceTemp = LoadTextFile(pVertShaderFile);
     std::string fragmentSourceTemp = LoadTextFile(pFragShaderFile);
@@ -64,7 +64,7 @@ Shader ResourceManager::LoadShaderFromFile(const std::string &pVertShaderFile, c
     return shader;
 }
 
-Texture2D ResourceManager::LoadTexture2DFromFile(const std::string &pFile)
+Texture2D ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
 {
     int width, height, channels;
     unsigned char* imageData = stbi_load(pFile.c_str(), &width, &height, &channels, 0);
@@ -90,7 +90,7 @@ Texture2D ResourceManager::LoadTexture2DFromFile(const std::string &pFile)
     return texture;
 }
 
-std::string ResourceManager::LoadTextFile(const std::string &pFile)
+std::string ResourceManager::LoadTextFile(const std::string& pFile)
 {
     std::string content;
 
@@ -103,7 +103,7 @@ std::string ResourceManager::LoadTextFile(const std::string &pFile)
         file.close();
 
         content = fileStream.str();
-    } 
+    }
     catch (std::exception e)
     {
         std::cout << "ERROR::ResourceManager: Failed to load text file: " << pFile << std::endl;

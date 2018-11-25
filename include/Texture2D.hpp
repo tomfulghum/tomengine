@@ -5,35 +5,35 @@
 
 namespace tomengine
 {
-    class Texture2D
-    {
-        public:
-        GLuint ID;
+class Texture2D
+{
+public:
+    GLuint ID;
 
-        Texture2D();
+    Texture2D();
 
-        GLuint GetInternalFormat() { return this->internalFormat; };
-        GLuint GetImageFormat() { return this->imageFormat; };
-        GLuint GetWrappingModeS() { return this->wrappingModeS; };
-        GLuint GetWrappingModeT() { return this->wrappingModeT; };
-        GLuint GetFilterMin() { return this->filterMin; };
-        GLuint GetFilterMag() { return this->filterMag; };
-        
-        void SetInternalFormat(GLuint pFormat);
-        void SetImageFormat(GLuint pFormat);
+    GLuint GetInternalFormat() { return this->internalFormat; };
+    GLuint GetImageFormat() { return this->imageFormat; };
+    GLuint GetWrappingModeS() { return this->wrappingModeS; };
+    GLuint GetWrappingModeT() { return this->wrappingModeT; };
+    GLuint GetFilterMin() { return this->filterMin; };
+    GLuint GetFilterMag() { return this->filterMag; };
 
-        void Generate(GLuint pWidth, GLuint pHeight, unsigned char* pData);
-        void Bind() const;
+    void SetInternalFormat(GLuint pFormat);
+    void SetImageFormat(GLuint pFormat);
 
-        private:
-        GLuint width, height;
-        GLuint internalFormat;
-        GLuint imageFormat;
-        GLuint wrappingModeS;
-        GLuint wrappingModeT;
-        GLuint filterMin;
-        GLuint filterMag;
-    };
-} // tomengine
+    void Generate(GLuint pWidth, GLuint pHeight, unsigned char* pData);
+    void Bind() const;
+
+private:
+    GLuint width, height;
+    GLuint internalFormat;
+    GLuint imageFormat;
+    GLuint wrappingModeS;
+    GLuint wrappingModeT;
+    GLuint filterMin;
+    GLuint filterMag;
+};
+} // namespace tomengine
 
 #endif

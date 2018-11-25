@@ -12,7 +12,7 @@ Shader& Shader::Use()
     return *this;
 }
 
-void Shader::Compile(const std::string &pVertSource, const std::string &pFragSource, const std::string &pGeomSource)
+void Shader::Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource)
 {
     const GLchar* vertexShaderSource = pVertSource.c_str();
     const GLchar* fragmentShaderSource = pFragSource.c_str();
@@ -66,7 +66,7 @@ void Shader::Compile(const GLchar* pVertSource, const GLchar* pFragSource, const
     }
 }
 
-void Shader::SetFloat(const std::string &pName, GLfloat pValue, GLboolean pUseShader)
+void Shader::SetFloat(const std::string& pName, GLfloat pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -75,7 +75,7 @@ void Shader::SetFloat(const std::string &pName, GLfloat pValue, GLboolean pUseSh
     glUniform1f(glGetUniformLocation(this->ID, pName.c_str()), pValue);
 }
 
-void Shader::SetInteger(const std::string &pName, GLint pValue, GLboolean pUseShader)
+void Shader::SetInteger(const std::string& pName, GLint pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -84,7 +84,7 @@ void Shader::SetInteger(const std::string &pName, GLint pValue, GLboolean pUseSh
     glUniform1i(glGetUniformLocation(this->ID, pName.c_str()), pValue);
 }
 
-void Shader::SetVector2f(const std::string &pName, const glm::vec2 &pValue, GLboolean pUseShader)
+void Shader::SetVector2f(const std::string& pName, const glm::vec2& pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -93,7 +93,7 @@ void Shader::SetVector2f(const std::string &pName, const glm::vec2 &pValue, GLbo
     glUniform2f(glGetUniformLocation(this->ID, pName.c_str()), pValue.x, pValue.y);
 }
 
-void Shader::SetVector3f(const std::string &pName, const glm::vec3 &pValue, GLboolean pUseShader)
+void Shader::SetVector3f(const std::string& pName, const glm::vec3& pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -102,7 +102,7 @@ void Shader::SetVector3f(const std::string &pName, const glm::vec3 &pValue, GLbo
     glUniform3f(glGetUniformLocation(this->ID, pName.c_str()), pValue.x, pValue.y, pValue.z);
 }
 
-void Shader::SetVector4f(const std::string &pName, const glm::vec4 &pValue, GLboolean pUseShader)
+void Shader::SetVector4f(const std::string& pName, const glm::vec4& pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -111,7 +111,7 @@ void Shader::SetVector4f(const std::string &pName, const glm::vec4 &pValue, GLbo
     glUniform4f(glGetUniformLocation(this->ID, pName.c_str()), pValue.x, pValue.y, pValue.z, pValue.w);
 }
 
-void Shader::SetMatrix4f(const std::string &pName, const glm::mat4 &pValue, GLboolean pUseShader)
+void Shader::SetMatrix4f(const std::string& pName, const glm::mat4& pValue, GLboolean pUseShader)
 {
     if (pUseShader)
     {
@@ -130,7 +130,7 @@ void Shader::CheckCompilerErrors(GLuint pObject)
     {
         glGetShaderInfoLog(pObject, 1024, NULL, infoLog);
         std::cout << "ERROR::Shader: Failed to compile shader (ID: " << this->ID << ")\n"
-            << infoLog << std::endl;
+                  << infoLog << std::endl;
     }
 }
 
@@ -144,6 +144,6 @@ void Shader::CheckLinkerErrors(GLuint pObject)
     {
         glGetProgramInfoLog(pObject, 1024, NULL, infoLog);
         std::cout << "ERROR::Shader: Failed to link shader (ID: " << this->ID << ")\n"
-            << infoLog << std::endl;
+                  << infoLog << std::endl;
     }
 }

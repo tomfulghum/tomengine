@@ -3,19 +3,19 @@
 
 namespace tomengine
 {
-    class Application
-    {
-        public:
-        ~Application();
+class Application
+{
+public:
+    ~Application();
 
-        virtual void Initialize();
-        virtual void Update();
-        virtual void Render();
-        virtual void Terminate();
+    virtual void Initialize();
+    virtual void Update();
+    virtual void Render();
+    virtual void Terminate();
 
-        protected:
-        Application();
-    };
-}
+protected:
+    Application();
+};
+} // namespace tomengine
 
 #endif

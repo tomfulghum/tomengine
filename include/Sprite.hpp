@@ -9,19 +9,19 @@
 
 namespace tomengine
 {
-    class Sprite : public Transformable
-    {
-        public:
-        Sprite(const std::string &pTexture, const glm::vec3 &pTint = glm::vec3(1.0f));
-        Sprite(Texture2D &pTexture, const glm::vec3 &pTint = glm::vec3(1.0f));
+class Sprite : public Transformable
+{
+public:
+    Sprite(const std::string& pTexture, const glm::vec3& pTint = glm::vec3(1.0f));
+    Sprite(Texture2D& pTexture, const glm::vec3& pTint = glm::vec3(1.0f));
 
-        glm::vec3 GetTint() { return this->tint; } 
-        void SetTint(const glm::vec3 &pTint);
+    glm::vec3 GetTint() { return this->tint; }
+    void SetTint(const glm::vec3& pTint);
 
-        private:
-        Texture2D texture;
-        glm::vec3 tint;
-    };
-} // tomengine
+private:
+    Texture2D texture;
+    glm::vec3 tint;
+};
+} // namespace tomengine
 
 #endif
