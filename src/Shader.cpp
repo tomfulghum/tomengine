@@ -1,5 +1,9 @@
 #include "Shader.hpp"
 
+#include <iostream>
+
+#include <glm/gtc/type_ptr.hpp>
+
 using namespace tomengine;
 
 Shader& Shader::Use()

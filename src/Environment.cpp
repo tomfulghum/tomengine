@@ -1,5 +1,7 @@
 #include "Environment.hpp"
 
+#include <iostream>
+
 using namespace tomengine;
 
 // Initialize static variables

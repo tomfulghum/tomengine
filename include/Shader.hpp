@@ -1,12 +1,10 @@
 #ifndef TOMENGINE_SHADER_HPP
 #define TOMENGINE_SHADER_HPP
 
-#include <iostream>
 #include <string>
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace tomengine
 {

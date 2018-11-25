@@ -1,7 +1,6 @@
 #ifndef TOMENGINE_ENVIRONMENT_HPP
 #define TOMENGINE_ENVIRONMENT_HPP
 
-#include <iostream>
 #include <string>
 
 #include <glad/glad.h>

@@ -1,13 +1,8 @@
 #ifndef TOMENGINE_RESOURCE_MANAGER_HPP
 #define TOMENGINE_RESOURCE_MANAGER_HPP
 
-#include <fstream>
-#include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
-
-#include <glad/glad.h>
 
 #include "Shader.hpp"
 #include "Texture2D.hpp"
