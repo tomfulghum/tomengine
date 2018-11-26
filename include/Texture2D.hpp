@@ -19,6 +19,8 @@ public:
 
     Texture2D();
 
+    int GetWidth() { return this->width; }
+    int GetHeight() { return this->height; }
     GLuint GetInternalFormat() { return this->internalFormat; };
     GLuint GetImageFormat() { return this->imageFormat; };
     GLuint GetWrappingModeS() { return this->wrappingModeS; };

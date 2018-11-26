@@ -14,11 +14,16 @@ typedef std::weak_ptr<SpriteEntity> SpriteEntityPtrW;
 class SpriteEntity : public Entity
 {
 public:
-    SpriteEntity(SpritePtr pSprite);
-    SpriteEntity(Texture2DPtr pTexture);
+    SpriteEntity(SpritePtr pSprite, ShaderPtr pShader = nullptr);
+    SpriteEntity(Texture2DPtr pTexture, ShaderPtr pShader = nullptr);
+
+    SpritePtr GetSprite() { return this->sprite; }
 
 private:
     SpritePtr sprite;
+    ShaderPtr shader;
+
+    void InitializeTransform();
 };
 
 } // namespace tomengine

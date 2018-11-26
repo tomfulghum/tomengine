@@ -13,9 +13,25 @@ using namespace tomengine;
 std::map<std::string, ShaderPtr> ResourceManager::Shaders;
 std::map<std::string, Texture2DPtr> ResourceManager::Textures;
 
-ShaderPtr ResourceManager::LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName)
+ShaderPtr ResourceManager::LoadShaderFiles(const std::string& pName, const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
 {
-    Shaders[pName] = LoadShaderFromFile(pVertShaderFile, pFragShaderFile, pGeomShaderFile);
+    std::string vertexSrc = LoadTextFile(pVertShaderFile);
+    std::string fragmentSrc = LoadTextFile(pFragShaderFile);
+    std::string geometrySrc = pGeomShaderFile.empty() ? "" : LoadTextFile(pGeomShaderFile);
+
+    return LoadShaderSource(pName, pVertShaderFile, pFragShaderFile, pGeomShaderFile);
+}
+
+ShaderPtr ResourceManager::LoadShaderSource(const std::string& pName, const std::string& pVertShaderSrc, const std::string& pFragShaderSrc, const std::string& pGeomShaderSrc)
+{
+    const GLchar* vertexSrc = pVertShaderSrc.c_str();
+    const GLchar* fragmentSrc = pFragShaderSrc.c_str();
+    const GLchar* geometrySrc = pGeomShaderSrc.empty() ? nullptr : pGeomShaderSrc.c_str();
+
+    ShaderPtr shader = std::make_shared<Shader>();
+    shader->Compile(vertexSrc, fragmentSrc, geometrySrc);
+
+    Shaders[pName] = shader;
     return Shaders[pName];
 }
 
@@ -48,20 +64,6 @@ void ResourceManager::Clear()
 
     Shaders.clear();
     Textures.clear();
-}
-
-ShaderPtr ResourceManager::LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
-{
-    std::string vertexSourceTemp = LoadTextFile(pVertShaderFile);
-    std::string fragmentSourceTemp = LoadTextFile(pFragShaderFile);
-    std::string geometrySourceTemp = pGeomShaderFile.empty() ? "" : LoadTextFile(pGeomShaderFile);
-    const GLchar* vertexSource = vertexSourceTemp.c_str();
-    const GLchar* fragmentSource = fragmentSourceTemp.c_str();
-    const GLchar* geometrySource = geometrySourceTemp.empty() ? nullptr : geometrySourceTemp.c_str();
-
-    ShaderPtr shader = std::make_shared<Shader>();
-    shader->Compile(vertexSource, fragmentSource, geometrySource);
-    return shader;
 }
 
 Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)

@@ -20,6 +20,7 @@ public:
     Sprite(const std::string& pTexture, const glm::vec3& pTint = glm::vec3(1.0f));
     Sprite(Texture2DPtr pTexture, const glm::vec3& pTint = glm::vec3(1.0f));
 
+    Texture2DPtr GetTexture() { return this->texture; }
     glm::vec3 GetTint() { return this->tint; }
     void SetTint(const glm::vec3& pTint);
 
