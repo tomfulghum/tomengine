@@ -8,6 +8,11 @@ class Minesweeper : public tomengine::Application
 public:
     Minesweeper();
     ~Minesweeper();
-}
+
+    void Initialize() override;
+    void Update() override;
+    void Render() override;
+    void Terminate() override;
+};
 
 #endif

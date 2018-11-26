@@ -5,7 +5,7 @@
 using namespace tomengine;
 
 // Initialize static variables
-Application* Environment::App;
+ApplicationPtr Environment::App;
 GLFWwindow* Environment::Window;
 int Environment::WindowWidth = 800;
 int Environment::WindowHeight = 600;
@@ -19,7 +19,7 @@ bool Environment::GetKey(int pKey)
     return Keys[pKey];
 }
 
-void Environment::SetApplication(Application* pApp)
+void Environment::SetApplication(ApplicationPtr pApp)
 {
     App = pApp;
 }

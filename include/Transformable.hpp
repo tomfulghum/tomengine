@@ -6,6 +6,7 @@
 
 namespace tomengine
 {
+
 struct Transform
 {
     glm::vec3 scale;
@@ -40,6 +41,7 @@ protected:
 
     void CalculateTransformMatrix();
 };
+
 } // namespace tomengine
 
 #endif

@@ -10,27 +10,27 @@
 
 using namespace tomengine;
 
-std::map<std::string, Shader> ResourceManager::Shaders;
-std::map<std::string, Texture2D> ResourceManager::Textures;
+std::map<std::string, ShaderPtr> ResourceManager::Shaders;
+std::map<std::string, Texture2DPtr> ResourceManager::Textures;
 
-Shader ResourceManager::LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName)
+ShaderPtr ResourceManager::LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName)
 {
     Shaders[pName] = LoadShaderFromFile(pVertShaderFile, pFragShaderFile, pGeomShaderFile);
     return Shaders[pName];
 }
 
-Shader& ResourceManager::GetShader(const std::string& pName)
+ShaderPtr ResourceManager::GetShader(const std::string& pName)
 {
     return Shaders[pName];
 }
 
-Texture2D ResourceManager::LoadTexture2D(const std::string& pFile, const std::string& pName)
+Texture2DPtr ResourceManager::LoadTexture2D(const std::string& pFile, const std::string& pName)
 {
     Textures[pName] = LoadTexture2DFromFile(pFile);
     return Textures[pName];
 }
 
-Texture2D& ResourceManager::GetTexture2D(const std::string& pName)
+Texture2DPtr ResourceManager::GetTexture2D(const std::string& pName)
 {
     return Textures[pName];
 }
@@ -39,18 +39,18 @@ void ResourceManager::Clear()
 {
     for (auto iShader : Shaders)
     {
-        glDeleteProgram(iShader.second.ID);
+        glDeleteProgram(iShader.second->ID);
     }
     for (auto iTexture2D : Textures)
     {
-        glDeleteTextures(1, &iTexture2D.second.ID);
+        glDeleteTextures(1, &iTexture2D.second->ID);
     }
 
     Shaders.clear();
     Textures.clear();
 }
 
-Shader ResourceManager::LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
+ShaderPtr ResourceManager::LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
 {
     std::string vertexSourceTemp = LoadTextFile(pVertShaderFile);
     std::string fragmentSourceTemp = LoadTextFile(pFragShaderFile);
@@ -59,27 +59,27 @@ Shader ResourceManager::LoadShaderFromFile(const std::string& pVertShaderFile, c
     const GLchar* fragmentSource = fragmentSourceTemp.c_str();
     const GLchar* geometrySource = geometrySourceTemp.empty() ? nullptr : geometrySourceTemp.c_str();
 
-    Shader shader;
-    shader.Compile(vertexSource, fragmentSource, geometrySource);
+    ShaderPtr shader = std::make_shared<Shader>();
+    shader->Compile(vertexSource, fragmentSource, geometrySource);
     return shader;
 }
 
-Texture2D ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
+Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
 {
     int width, height, channels;
     unsigned char* imageData = stbi_load(pFile.c_str(), &width, &height, &channels, 0);
 
-    Texture2D texture;
+    Texture2DPtr texture = std::make_shared<Texture2D>();
 
     if (imageData)
     {
         if (channels == 4)
         {
-            texture.SetInternalFormat(GL_RGBA);
-            texture.SetImageFormat(GL_RGBA);
+            texture->SetInternalFormat(GL_RGBA);
+            texture->SetImageFormat(GL_RGBA);
         }
 
-        texture.Generate(width, height, imageData);
+        texture->Generate(width, height, imageData);
     }
     else
     {

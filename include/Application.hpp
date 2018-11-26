@@ -1,21 +1,27 @@
 #ifndef TOMENGINE_APPLICATION_HPP
 #define TOMENGINE_APPLICATION_HPP
 
+#include <memory>
+
 namespace tomengine
 {
+
+class Application;
+typedef std::shared_ptr<Application> ApplicationPtr;
+typedef std::weak_ptr<Application> ApplicationPtrW;
+
 class Application
 {
 public:
-    ~Application();
-
-    virtual void Initialize();
-    virtual void Update();
-    virtual void Render();
-    virtual void Terminate();
+    virtual void Initialize() {}
+    virtual void Update() {}
+    virtual void Render() {}
+    virtual void Terminate() {}
 
 protected:
-    Application();
+    Application() {}
 };
+
 } // namespace tomengine
 
 #endif

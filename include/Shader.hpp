@@ -1,6 +1,7 @@
 #ifndef TOMENGINE_SHADER_HPP
 #define TOMENGINE_SHADER_HPP
 
+#include <memory>
 #include <string>
 
 #include <glad/glad.h>
@@ -8,6 +9,11 @@
 
 namespace tomengine
 {
+
+class Shader;
+typedef std::shared_ptr<Shader> ShaderPtr;
+typedef std::weak_ptr<Shader> ShaderPtrW;
+
 class Shader
 {
 public:
@@ -15,7 +21,7 @@ public:
 
     Shader() {}
 
-    Shader& Use();
+    ShaderPtr Use();
     void Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource = "");
     void Compile(const GLchar* pVertSource, const GLchar* pFragSource, const GLchar* pGeomSource = nullptr);
 
@@ -30,6 +36,7 @@ private:
     void CheckCompilerErrors(GLuint pObject);
     void CheckLinkerErrors(GLuint pObject);
 };
+
 } // namespace tomengine
 
 #endif

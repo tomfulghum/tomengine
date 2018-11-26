@@ -6,10 +6,10 @@
 
 using namespace tomengine;
 
-Shader& Shader::Use()
+ShaderPtr Shader::Use()
 {
     glUseProgram(this->ID);
-    return *this;
+    return ShaderPtr(this);
 }
 
 void Shader::Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource)

@@ -2,6 +2,7 @@
 #define TOMENGINE_RESOURCE_MANAGER_HPP
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "Shader.hpp"
@@ -9,25 +10,31 @@
 
 namespace tomengine
 {
+
+class ResourceManager;
+typedef std::shared_ptr<ResourceManager> ResourceManagerPtr;
+typedef std::weak_ptr<ResourceManager> ResourceManagerPtrW;
+
 class ResourceManager
 {
 public:
-    static std::map<std::string, Shader> Shaders;
-    static std::map<std::string, Texture2D> Textures;
+    static std::map<std::string, ShaderPtr> Shaders;
+    static std::map<std::string, Texture2DPtr> Textures;
 
-    static Shader LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName);
-    static Shader& GetShader(const std::string& pName);
-    static Texture2D LoadTexture2D(const std::string& pFile, const std::string& pName);
-    static Texture2D& GetTexture2D(const std::string& pName);
+    static ShaderPtr LoadShader(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile, const std::string& pName);
+    static ShaderPtr GetShader(const std::string& pName);
+    static Texture2DPtr LoadTexture2D(const std::string& pFile, const std::string& pName);
+    static Texture2DPtr GetTexture2D(const std::string& pName);
 
     static void Clear();
 
 private:
     ResourceManager() {}
-    static Shader LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile = "");
-    static Texture2D LoadTexture2DFromFile(const std::string& pFile);
+    static ShaderPtr LoadShaderFromFile(const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile = "");
+    static Texture2DPtr LoadTexture2DFromFile(const std::string& pFile);
     static std::string LoadTextFile(const std::string& pFile);
 };
+
 } // namespace tomengine
 
 #endif

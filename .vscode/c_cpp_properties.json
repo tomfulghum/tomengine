@@ -3,6 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
+                "${workspaceFolder}/application/minesweeper/include",
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/external/include",
                 "${workspaceFolder}/external/glad/include",

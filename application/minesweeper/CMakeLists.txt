@@ -5,6 +5,10 @@ add_executable(minesweeper
     ${SOURCES}
 )
 
+target_include_directories(minesweeper PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
 target_link_libraries(minesweeper tomengine)
 
 set(DATA_SRC "${CMAKE_CURRENT_SOURCE_DIR}/data")

@@ -1,10 +1,17 @@
 #ifndef TOMENGINE_TEXTURE2D_HPP
 #define TOMENGINE_TEXTURE2D_HPP
 
+#include <memory>
+
 #include <glad/glad.h>
 
 namespace tomengine
 {
+
+class Texture2D;
+typedef std::shared_ptr<Texture2D> Texture2DPtr;
+typedef std::weak_ptr<Texture2D> Texture2DPtrW;
+
 class Texture2D
 {
 public:
@@ -34,6 +41,7 @@ private:
     GLuint filterMin;
     GLuint filterMag;
 };
+
 } // namespace tomengine
 
 #endif
