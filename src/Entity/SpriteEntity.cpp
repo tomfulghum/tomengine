@@ -2,14 +2,14 @@
 
 using namespace tomengine;
 
-SpriteEntity::SpriteEntity(SpritePtr pSprite, ShaderPtr pShader) :
-    Entity(), sprite(pSprite), shader(pShader)
+SpriteEntity::SpriteEntity(SpritePtr pSprite) :
+    Entity(), sprite(pSprite)
 {
     InitializeTransform();
 }
 
-SpriteEntity::SpriteEntity(Texture2DPtr pTexture, ShaderPtr pShader) :
-    Entity(), shader(pShader)
+SpriteEntity::SpriteEntity(Texture2DPtr pTexture) :
+    Entity()
 {
     this->sprite = std::make_shared<Sprite>(pTexture, glm::vec3(1.0f));
     InitializeTransform();
@@ -20,5 +20,5 @@ void SpriteEntity::InitializeTransform()
     int spriteWidth = this->sprite->GetTexture()->GetWidth();
     int spriteHeight = this->sprite->GetTexture()->GetHeight();
 
-    this->transform.pivot = glm::vec3(0.5f * spriteWidth, 0.5f * spriteHeight, 0.0f);
+    this->SetPivot(glm::vec3(0.5f * spriteWidth, 0.5f * spriteHeight, 0.0f));
 }

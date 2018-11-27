@@ -72,13 +72,13 @@ void SpriteRenderer::InitShader()
 
         void main()
         {
-            texCoords = vertex.zw;
+            _texCoords = vertex.zw;
             gl_Position = projection * model * vec4(vertex.xy, 0.0, 1.0);
         }
     )";
 
     std::string fragmentSource = R"(
-        #versin 400 core
+        #version 400 core
 
         in vec2 _texCoords;
 

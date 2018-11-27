@@ -1,3 +1,6 @@
+#ifndef TOMENGINE_SPRITE_ENTITY_HPP
+#define TOMENGINE_SPRITE_ENTITY_HPP
+
 #include <memory>
 
 #include "Entity/Entity.hpp"
@@ -14,8 +17,8 @@ typedef std::weak_ptr<SpriteEntity> SpriteEntityPtrW;
 class SpriteEntity : public Entity
 {
 public:
-    SpriteEntity(SpritePtr pSprite, ShaderPtr pShader = nullptr);
-    SpriteEntity(Texture2DPtr pTexture, ShaderPtr pShader = nullptr);
+    SpriteEntity(SpritePtr pSprite);
+    SpriteEntity(Texture2DPtr pTexture);
 
     SpritePtr GetSprite() { return this->sprite; }
 
@@ -27,3 +30,5 @@ private:
 };
 
 } // namespace tomengine
+
+#endif

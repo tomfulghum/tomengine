@@ -1,8 +1,12 @@
 #include "Minesweeper.hpp"
 
 #include <iostream>
+#include <memory>
 
 #include "Environment.hpp"
+#include "ResourceManager.hpp"
+#include "SpriteRenderer.hpp"
+#include "Entity/SpriteEntity.hpp"
 
 using namespace tomengine;
 
@@ -15,24 +19,32 @@ Minesweeper::~Minesweeper()
 {
 }
 
+SpriteEntityPtr entMegumin;
+SpriteRendererPtr spriteRenderer;
+
 void Minesweeper::Initialize()
 {
+    Texture2DPtr texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
+    entMegumin = std::make_shared<SpriteEntity>(texMegumin);
+    spriteRenderer = std::make_shared<SpriteRenderer>();
 
     std::cout << "Initialize Minesweeper!" << std::endl;
 }
 
 void Minesweeper::Update()
 {
-    std::cout << "Update Minesweeper!" << std::endl;
+    //std::cout << "Update Minesweeper!" << std::endl;
 }
 
 void Minesweeper::Render()
 {
-    std::cout << "Render Minesweeper!" << std::endl;
+    spriteRenderer->DrawSprite(entMegumin);
+    //std::cout << "Render Minesweeper!" << std::endl;
 }
 
 void Minesweeper::Terminate()
 {
+    spriteRenderer.reset();
     std::cout << "Terminate Minesweeper!" << std::endl;
 }
 

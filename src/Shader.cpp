@@ -6,10 +6,9 @@
 
 using namespace tomengine;
 
-ShaderPtr Shader::Use()
+void Shader::Use()
 {
     glUseProgram(this->ID);
-    return ShaderPtr(this);
 }
 
 void Shader::Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource)
@@ -139,7 +138,7 @@ void Shader::CheckLinkerErrors(GLuint pObject)
     GLint success;
     GLchar infoLog[1024];
 
-    glGetProgramiv(pObject, GL_COMPILE_STATUS, &success);
+    glGetProgramiv(pObject, GL_LINK_STATUS, &success);
     if (!success)
     {
         glGetProgramInfoLog(pObject, 1024, NULL, infoLog);

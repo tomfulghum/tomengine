@@ -11,8 +11,14 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-file(GLOB SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
-add_library(tomengine STATIC
+set(CMAKE_BUILD_TYPE Debug)
+
+file(GLOB SOURCES 
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/Entity/*.cpp"
+)
+
+add_library(tomengine OBJECT
     ${SOURCES}
     ${EXTERNAL_DIRECTORY}/glad/src/glad.c
 )

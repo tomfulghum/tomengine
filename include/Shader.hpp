@@ -21,7 +21,7 @@ public:
 
     Shader() {}
 
-    ShaderPtr Use();
+    void Use();
     void Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource = "");
     void Compile(const GLchar* pVertSource, const GLchar* pFragSource, const GLchar* pGeomSource = nullptr);
 

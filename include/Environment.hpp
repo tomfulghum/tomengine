@@ -46,6 +46,7 @@ private:
     static void SetKey(int pKey, bool pPressed);
     static void KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMode);
     static void FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
+    static void APIENTRY GlDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 };
 
 } // namespace tomengine

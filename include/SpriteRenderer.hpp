@@ -9,6 +9,10 @@
 namespace tomengine
 {
 
+class SpriteRenderer;
+typedef std::shared_ptr<SpriteRenderer> SpriteRendererPtr;
+typedef std::weak_ptr<SpriteRenderer> SpriteRendererPtrW;
+
 class SpriteRenderer
 {
 public:
