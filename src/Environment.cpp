@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 using namespace tomengine;
 
 // Initialize static variables
@@ -9,6 +11,7 @@ ApplicationPtr Environment::App;
 GLFWwindow* Environment::Window;
 int Environment::WindowWidth = 800;
 int Environment::WindowHeight = 600;
+glm::mat4 Environment::OrthoProjMatrix = glm::mat4(0.0f);
 std::string Environment::WindowTitle = "TomEngine";
 float Environment::LastFrameTime;
 float Environment::DeltaTime;
@@ -73,7 +76,7 @@ int Environment::Initialize()
     }
 
     glViewport(0, 0, WindowWidth, WindowHeight);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -96,7 +99,7 @@ void Environment::Update()
         DeltaTime = currentFrameTime - LastFrameTime;
         LastFrameTime = currentFrameTime;
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (App)
@@ -150,6 +153,7 @@ void Environment::FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int p
     WindowWidth = pWidth;
     WindowHeight = pHeight;
     glViewport(0, 0, pWidth, pHeight);
+    OrthoProjMatrix = glm::ortho(0.0f, static_cast<GLfloat>(WindowWidth), static_cast<GLfloat>(WindowHeight), 0.0f, -1.0f, 1.0f);
     std::cout << "Window dimensions: " << pWidth << "x" << pHeight << std::endl;
 }
 

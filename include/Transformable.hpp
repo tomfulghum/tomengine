@@ -11,7 +11,7 @@ struct Transform
 {
     glm::vec3 scale;
     glm::vec3 pivot;
-    glm::quat rotation;
+    float rotation;
     glm::vec3 position;
 };
 
@@ -23,16 +23,20 @@ public:
     const Transform& GetTransform() { return this->transform; }
     glm::vec3 GetScale() { return this->transform.scale; }
     glm::vec3 GetPivot() { return this->transform.pivot; }
-    glm::quat GetRotation() { return this->transform.rotation; }
+    float GetRotation() { return this->transform.rotation; }
     glm::vec3 GetPosition() { return this->transform.position; }
     glm::mat4 GetTransformMatrix();
-    glm::vec3 GetEulerAngles();
 
     void SetScale(const glm::vec3& pScale);
+    void SetScale(const float pX, const float pY, const float pZ);
+    void SetScale(const float pX, const float pY);
     void SetPivot(const glm::vec3& pPivot);
-    void SetRotation(const glm::quat& pRotation);
-    void SetRotation(const glm::vec3& pEulerAngles);
+    void SetPivot(const float pX, const float pY, const float pZ);
+    void SetPivot(const float pX, const float pY);
+    void SetRotation(const float rotation);
     void SetPosition(const glm::vec3& pPosition);
+    void SetPosition(const float pX, const float pY, const float pZ);
+    void SetPosition(const float pX, const float pY);
 
 protected:
     Transform transform;

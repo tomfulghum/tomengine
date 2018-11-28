@@ -6,15 +6,12 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include "Application.hpp"
 
 namespace tomengine
 {
-
-class Environment;
-typedef std::shared_ptr<Environment> EnvironmentPtr;
-typedef std::weak_ptr<Environment> EnvironmentPtrW;
 
 class Environment
 {
@@ -23,6 +20,7 @@ public:
 
     static int GetWindowWidth() { return WindowWidth; }
     static int GetWindowHeight() { return WindowHeight; }
+    static glm::mat4 GetOrthoProjectionMatrix() { return OrthoProjMatrix; }
     static float GetDeltaTime() { return DeltaTime; }
     static bool GetKey(int pKey);
 
@@ -35,9 +33,12 @@ public:
     static void Terminate();
 
 private:
+    Environment();
+
     static GLFWwindow* Window;
     static int WindowWidth;
     static int WindowHeight;
+    static glm::mat4 OrthoProjMatrix;
     static std::string WindowTitle;
     static float LastFrameTime;
     static float DeltaTime;

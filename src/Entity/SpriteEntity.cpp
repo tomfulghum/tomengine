@@ -21,4 +21,5 @@ void SpriteEntity::InitializeTransform()
     int spriteHeight = this->sprite->GetTexture()->GetHeight();
 
     this->SetPivot(glm::vec3(0.5f * spriteWidth, 0.5f * spriteHeight, 0.0f));
+    this->SetScale(glm::vec3(spriteWidth, spriteHeight, 1.0f));
 }

@@ -69,6 +69,7 @@ void ResourceManager::Clear()
 Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
 {
     int width, height, channels;
+    //stbi_set_flip_vertically_on_load(true);
     unsigned char* imageData = stbi_load(pFile.c_str(), &width, &height, &channels, 0);
 
     Texture2DPtr texture = std::make_shared<Texture2D>();
