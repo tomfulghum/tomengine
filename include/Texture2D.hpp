@@ -19,19 +19,19 @@ public:
 
     Texture2D();
 
-    int GetWidth() { return this->width; }
-    int GetHeight() { return this->height; }
-    GLuint GetInternalFormat() { return this->internalFormat; };
-    GLuint GetImageFormat() { return this->imageFormat; };
-    GLuint GetWrappingModeS() { return this->wrappingModeS; };
-    GLuint GetWrappingModeT() { return this->wrappingModeT; };
-    GLuint GetFilterMin() { return this->filterMin; };
-    GLuint GetFilterMag() { return this->filterMag; };
+    int GetWidth() const { return this->width; }
+    int GetHeight() const { return this->height; }
+    GLuint GetInternalFormat() const { return this->internalFormat; };
+    GLuint GetImageFormat() const { return this->imageFormat; };
+    GLuint GetWrappingModeS() const { return this->wrappingModeS; };
+    GLuint GetWrappingModeT() const { return this->wrappingModeT; };
+    GLuint GetFilterMin() const { return this->filterMin; };
+    GLuint GetFilterMag() const { return this->filterMag; };
 
-    void SetInternalFormat(GLuint format);
-    void SetImageFormat(GLuint format);
+    void SetInternalFormat(const unsigned int format);
+    void SetImageFormat(const unsigned int format);
 
-    void Generate(GLuint width, GLuint height, unsigned char* data);
+    void Generate(const unsigned int width, const unsigned int height, const unsigned char* data);
     void Bind() const;
 
 private:

@@ -20,11 +20,11 @@ class Transformable
 public:
     Transformable();
 
-    const Transform& GetTransform() { return this->transform; }
-    glm::vec3 GetScale() { return this->transform.scale; }
-    glm::vec3 GetPivot() { return this->transform.pivot; }
-    float GetRotation() { return this->transform.rotation; }
-    glm::vec3 GetPosition() { return this->transform.position; }
+    const Transform& GetTransform() const { return this->transform; }
+    glm::vec3 GetScale() const { return this->transform.scale; }
+    glm::vec3 GetPivot() const { return this->transform.pivot; }
+    float GetRotation() const { return this->transform.rotation; }
+    glm::vec3 GetPosition() const { return this->transform.position; }
     glm::mat4 GetTransformMatrix();
 
     void SetScale(const glm::vec3& scale);

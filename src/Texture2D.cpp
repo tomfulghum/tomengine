@@ -24,7 +24,7 @@ void Texture2D::SetImageFormat(GLuint pFormat)
     this->imageFormat = pFormat;
 }
 
-void Texture2D::Generate(GLuint pWidth, GLuint pHeight, unsigned char* pData)
+void Texture2D::Generate(const unsigned int pWidth, const unsigned int pHeight, const unsigned char* pData)
 {
     this->width = pWidth;
     this->height = pHeight;

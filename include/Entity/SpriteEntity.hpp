@@ -20,7 +20,7 @@ public:
     SpriteEntity(SpritePtr sprite);
     SpriteEntity(Texture2DPtr texture);
 
-    SpritePtr GetSprite() { return this->sprite; }
+    SpritePtr GetSprite() const { return this->sprite; }
 
 private:
     SpritePtr sprite;

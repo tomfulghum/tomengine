@@ -16,7 +16,7 @@ class Entity : public Transformable
 {
 public:
     Entity() {}
-    ~Entity() {}
+    virtual ~Entity() {}
 
     virtual void Update() {}
     virtual void Render() {}
