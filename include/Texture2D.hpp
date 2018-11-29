@@ -28,10 +28,10 @@ public:
     GLuint GetFilterMin() { return this->filterMin; };
     GLuint GetFilterMag() { return this->filterMag; };
 
-    void SetInternalFormat(GLuint pFormat);
-    void SetImageFormat(GLuint pFormat);
+    void SetInternalFormat(GLuint format);
+    void SetImageFormat(GLuint format);
 
-    void Generate(GLuint pWidth, GLuint pHeight, unsigned char* pData);
+    void Generate(GLuint width, GLuint height, unsigned char* data);
     void Bind() const;
 
 private:

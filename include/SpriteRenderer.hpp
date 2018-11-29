@@ -19,7 +19,7 @@ public:
     SpriteRenderer();
     ~SpriteRenderer();
 
-    void DrawSprite(SpriteEntityPtr pEntity);
+    void DrawSprite(SpriteEntityPtr entity);
 
 private:
     ShaderPtr shader;

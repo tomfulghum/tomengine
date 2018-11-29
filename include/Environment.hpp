@@ -24,9 +24,9 @@ public:
     static float GetDeltaTime() { return DeltaTime; }
     static bool GetKey(int pKey);
 
-    static void SetApplication(ApplicationPtr pApp);
-    static void SetWindowDimensions(int pWidth, int pHeight);
-    static void SetWindowTitle(const std::string& pTitle);
+    static void SetApplication(ApplicationPtr app);
+    static void SetWindowDimensions(int width, int height);
+    static void SetWindowTitle(const std::string& title);
 
     static int Initialize();
     static void Update();
@@ -44,9 +44,9 @@ private:
     static float DeltaTime;
     static bool Keys[1024];
 
-    static void SetKey(int pKey, bool pPressed);
-    static void KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMode);
-    static void FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
+    static void SetKey(int key, bool pressed);
+    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     static void APIENTRY GlDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 };
 

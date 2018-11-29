@@ -22,19 +22,19 @@ public:
     Shader() {}
 
     void Use();
-    void Compile(const std::string& pVertSource, const std::string& pFragSource, const std::string& pGeomSource = "");
-    void Compile(const GLchar* pVertSource, const GLchar* pFragSource, const GLchar* pGeomSource = nullptr);
+    void Compile(const std::string& vertSource, const std::string& fragSource, const std::string& geomSource = "");
+    void Compile(const GLchar* vertSource, const GLchar* fragSource, const GLchar* geomSource = nullptr);
 
-    void SetFloat(const std::string& pName, GLfloat pValue, GLboolean pUseShader = false);
-    void SetInteger(const std::string& pName, GLint pValue, GLboolean pUseShader = false);
-    void SetVector2f(const std::string& pName, const glm::vec2& pValue, GLboolean pUseShader = false);
-    void SetVector3f(const std::string& pName, const glm::vec3& pValue, GLboolean pUseShader = false);
-    void SetVector4f(const std::string& pName, const glm::vec4& pValue, GLboolean pUseShader = false);
-    void SetMatrix4f(const std::string& pName, const glm::mat4& pValue, GLboolean pUseShader = false);
+    void SetFloat(const std::string& name, GLfloat value, GLboolean useShader = false);
+    void SetInteger(const std::string& name, GLint value, GLboolean useShader = false);
+    void SetVector2f(const std::string& name, const glm::vec2& value, GLboolean useShader = false);
+    void SetVector3f(const std::string& name, const glm::vec3& value, GLboolean useShader = false);
+    void SetVector4f(const std::string& name, const glm::vec4& value, GLboolean useShader = false);
+    void SetMatrix4f(const std::string& name, const glm::mat4& value, GLboolean useShader = false);
 
 private:
-    void CheckCompilerErrors(GLuint pObject);
-    void CheckLinkerErrors(GLuint pObject);
+    void CheckCompilerErrors(GLuint object);
+    void CheckLinkerErrors(GLuint object);
 };
 
 } // namespace tomengine

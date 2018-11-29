@@ -17,8 +17,8 @@ typedef std::weak_ptr<SpriteEntity> SpriteEntityPtrW;
 class SpriteEntity : public Entity
 {
 public:
-    SpriteEntity(SpritePtr pSprite);
-    SpriteEntity(Texture2DPtr pTexture);
+    SpriteEntity(SpritePtr sprite);
+    SpriteEntity(Texture2DPtr texture);
 
     SpritePtr GetSprite() { return this->sprite; }
 

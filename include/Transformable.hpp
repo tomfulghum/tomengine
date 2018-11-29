@@ -27,16 +27,16 @@ public:
     glm::vec3 GetPosition() { return this->transform.position; }
     glm::mat4 GetTransformMatrix();
 
-    void SetScale(const glm::vec3& pScale);
-    void SetScale(const float pX, const float pY, const float pZ);
-    void SetScale(const float pX, const float pY);
-    void SetPivot(const glm::vec3& pPivot);
-    void SetPivot(const float pX, const float pY, const float pZ);
-    void SetPivot(const float pX, const float pY);
+    void SetScale(const glm::vec3& scale);
+    void SetScale(const float x, const float y, const float z);
+    void SetScale(const float x, const float y);
+    void SetPivot(const glm::vec3& pivot);
+    void SetPivot(const float x, const float y, const float z);
+    void SetPivot(const float x, const float y);
     void SetRotation(const float rotation);
-    void SetPosition(const glm::vec3& pPosition);
-    void SetPosition(const float pX, const float pY, const float pZ);
-    void SetPosition(const float pX, const float pY);
+    void SetPosition(const glm::vec3& position);
+    void SetPosition(const float x, const float y, const float z);
+    void SetPosition(const float x, const float y);
 
 protected:
     Transform transform;
