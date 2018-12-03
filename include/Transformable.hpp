@@ -34,6 +34,7 @@ public:
     void SetPivot(const float x, const float y, const float z);
     void SetPivot(const float x, const float y);
     void SetRotation(const float rotation);
+    void SetRotationRadians(const float rotation);
     void SetPosition(const glm::vec3& position);
     void SetPosition(const float x, const float y, const float z);
     void SetPosition(const float x, const float y);

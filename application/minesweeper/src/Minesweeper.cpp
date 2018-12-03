@@ -6,8 +6,10 @@
 #include <glm/glm.hpp>
 
 #include "Environment.hpp"
+#include "Input.hpp"
 #include "ResourceManager.hpp"
 #include "SpriteRenderer.hpp"
+#include "Time.hpp"
 #include "Transformable.hpp"
 #include "Entity/SpriteEntity.hpp"
 
@@ -37,8 +39,11 @@ void Minesweeper::Initialize()
 
 void Minesweeper::Update()
 {
-    entMegumin->SetPosition(Environment::GetWindowWidth() / 2.0f, Environment::GetWindowHeight() / 2.0f);
-    entMegumin->SetRotation(rot += Environment::GetDeltaTime());
+    entMegumin->SetPosition(Environment::WindowWidth() / 2.0f, Environment::WindowHeight() / 2.0f);
+    entMegumin->SetRotation(rot += Time::DeltaTime());
+
+    std::cout << Input::GetMouseButtonUp(MOUSE_0) << std::endl;
+    //std::cout << entMegumin->GetRotation() << std::endl;
     //std::cout << "Update Minesweeper!" << std::endl;
 }
 

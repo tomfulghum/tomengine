@@ -55,6 +55,12 @@ void Transformable::SetPivot(const float pX, const float pY)
 
 void Transformable::SetRotation(const float pRotation)
 {
+    this->transform.rotation = glm::radians(pRotation);
+    this->changed = true;
+}
+
+void Transformable::SetRotationRadians(const float pRotation)
+{
     this->transform.rotation = pRotation;
     this->changed = true;
 }

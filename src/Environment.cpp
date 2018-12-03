@@ -4,17 +4,19 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Input.hpp"
+#include "Time.hpp"
+
 using namespace tomengine;
 
 // Initialize static variables
-ApplicationPtr Environment::App;
-GLFWwindow* Environment::Window;
-int Environment::WindowWidth = 800;
-int Environment::WindowHeight = 600;
-glm::mat4 Environment::OrthoProjMatrix = glm::mat4(0.0f);
-std::string Environment::WindowTitle = "TomEngine";
-float Environment::LastFrameTime;
-float Environment::DeltaTime;
+ApplicationPtr Environment::app;
+GLFWwindow* Environment::window;
+int Environment::windowWidth = 800;
+int Environment::windowHeight = 600;
+glm::mat4 Environment::orthoProjMatrix = glm::mat4(0.0f);
+std::string Environment::windowTitle = "TomEngine";
+float Environment::lastFrameTime;
 bool Environment::Keys[1024];
 
 bool Environment::GetKey(int pKey)
@@ -24,20 +26,20 @@ bool Environment::GetKey(int pKey)
 
 void Environment::SetApplication(ApplicationPtr pApp)
 {
-    App = pApp;
+    app = pApp;
 }
 
 void Environment::SetWindowDimensions(int pWidth, int pHeight)
 {
-    if (Window)
+    if (window)
     {
-        FramebufferSizeCallback(Window, pWidth, pHeight);
+        FramebufferSizeCallback(window, pWidth, pHeight);
     }
 }
 
 void Environment::SetWindowTitle(const std::string& pTitle)
 {
-    WindowTitle = pTitle;
+    windowTitle = pTitle;
 }
 
 int Environment::Initialize()
@@ -49,15 +51,15 @@ int Environment::Initialize()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
-    Window = glfwCreateWindow(WindowWidth, WindowHeight, WindowTitle.c_str(), NULL, NULL);
-    if (Window == NULL)
+    window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
+    if (window == NULL)
     {
         std::cout << "ERROR::Environment: Failed to create GLFW window." << std::endl;
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(Window);
+    glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -75,17 +77,19 @@ int Environment::Initialize()
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
     }
 
-    glViewport(0, 0, WindowWidth, WindowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
     //glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glfwSetKeyCallback(Window, KeyCallback);
-    glfwSetFramebufferSizeCallback(Window, FramebufferSizeCallback);
+    glfwSetKeyCallback(window, KeyCallback);
+    glfwSetCursorPosCallback(window, CursorPositionCallback);
+    glfwSetMouseButtonCallback(window, MouseButtonCallback);
+    glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
-    if (App)
+    if (app)
     {
-        App->Initialize();
+        app->Initialize();
     }
 
     return 0;
@@ -93,31 +97,33 @@ int Environment::Initialize()
 
 void Environment::Update()
 {
-    while (!glfwWindowShouldClose(Window))
+    while (!glfwWindowShouldClose(window))
     {
         float currentFrameTime = glfwGetTime();
-        DeltaTime = currentFrameTime - LastFrameTime;
-        LastFrameTime = currentFrameTime;
+        Time::deltaTime = currentFrameTime - lastFrameTime;
+        lastFrameTime = currentFrameTime;
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (App)
+        Input::UpdateButtonStates();
+        glfwPollEvents();
+
+        if (app)
         {
-            App->Update();
-            App->Render();
+            app->Update();
+            app->Render();
         }
 
-        glfwPollEvents();
-        glfwSwapBuffers(Window);
+        glfwSwapBuffers(window);
     }
 }
 
 void Environment::Terminate()
 {
-    if (App)
+    if (app)
     {
-        App->Terminate();
+        app->Terminate();
     }
     glfwTerminate();
 }
@@ -130,7 +136,7 @@ void Environment::SetKey(int pKey, bool pPressed)
     }
 }
 
-void Environment::KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMode)
+void Environment::KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods)
 {
     if (pKey == GLFW_KEY_ESCAPE && pAction == GLFW_PRESS)
     {
@@ -148,12 +154,29 @@ void Environment::KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int 
     }
 }
 
+void Environment::CursorPositionCallback(GLFWwindow* pWindow, double pPosX, double pPosY)
+{
+}
+
+void Environment::MouseButtonCallback(GLFWwindow* pWindow, int pButton, int pAction, int pMods)
+{
+    switch (pAction)
+    {
+        case (GLFW_PRESS):
+            Input::mouseButtonStates[Input::GetMouseButtonFromGlfw(pButton)] = BUTTON_DOWN;
+            break;
+        case (GLFW_RELEASE):
+            Input::mouseButtonStates[Input::GetMouseButtonFromGlfw(pButton)] = BUTTON_UP;
+            break;
+    }
+}
+
 void Environment::FramebufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight)
 {
-    WindowWidth = pWidth;
-    WindowHeight = pHeight;
+    windowWidth = pWidth;
+    windowHeight = pHeight;
     glViewport(0, 0, pWidth, pHeight);
-    OrthoProjMatrix = glm::ortho(0.0f, static_cast<GLfloat>(WindowWidth), static_cast<GLfloat>(WindowHeight), 0.0f, -1.0f, 1.0f);
+    orthoProjMatrix = glm::ortho(0.0f, static_cast<GLfloat>(windowWidth), static_cast<GLfloat>(windowHeight), 0.0f, -1.0f, 1.0f);
     std::cout << "Window dimensions: " << pWidth << "x" << pHeight << std::endl;
 }
 
@@ -163,41 +186,44 @@ void APIENTRY Environment::GlDebugCallback(GLenum source, GLenum type, GLuint id
     if (id == 131169 || id == 131185 || id == 131218 || id == 131204)
         return;
 
-    std::cout << "---------------" << std::endl;
+    std::cout << "--------------- OpenGL ---------------" << std::endl;
     std::cout << "Debug message (" << id << "): " << message << std::endl;
 
+    std::cout << "Source: ";
     switch (source)
     {
-    case GL_DEBUG_SOURCE_API: std::cout << "Source: API"; break;
-    case GL_DEBUG_SOURCE_WINDOW_SYSTEM: std::cout << "Source: Window System"; break;
-    case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Source: Shader Compiler"; break;
-    case GL_DEBUG_SOURCE_THIRD_PARTY: std::cout << "Source: Third Party"; break;
-    case GL_DEBUG_SOURCE_APPLICATION: std::cout << "Source: Application"; break;
-    case GL_DEBUG_SOURCE_OTHER: std::cout << "Source: Other"; break;
+        case GL_DEBUG_SOURCE_API: std::cout << "API"; break;
+        case GL_DEBUG_SOURCE_WINDOW_SYSTEM: std::cout << "Window System"; break;
+        case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Shader Compiler"; break;
+        case GL_DEBUG_SOURCE_THIRD_PARTY: std::cout << "Third Party"; break;
+        case GL_DEBUG_SOURCE_APPLICATION: std::cout << "Application"; break;
+        case GL_DEBUG_SOURCE_OTHER: std::cout << "Other"; break;
     }
     std::cout << std::endl;
 
+    std::cout << "Type: ";
     switch (type)
     {
-    case GL_DEBUG_TYPE_ERROR: std::cout << "Type: Error"; break;
-    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Type: Deprecated Behaviour"; break;
-    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: std::cout << "Type: Undefined Behaviour"; break;
-    case GL_DEBUG_TYPE_PORTABILITY: std::cout << "Type: Portability"; break;
-    case GL_DEBUG_TYPE_PERFORMANCE: std::cout << "Type: Performance"; break;
-    case GL_DEBUG_TYPE_MARKER: std::cout << "Type: Marker"; break;
-    case GL_DEBUG_TYPE_PUSH_GROUP: std::cout << "Type: Push Group"; break;
-    case GL_DEBUG_TYPE_POP_GROUP: std::cout << "Type: Pop Group"; break;
-    case GL_DEBUG_TYPE_OTHER: std::cout << "Type: Other"; break;
+        case GL_DEBUG_TYPE_ERROR: std::cout << "Error"; break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Deprecated Behaviour"; break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: std::cout << "Undefined Behaviour"; break;
+        case GL_DEBUG_TYPE_PORTABILITY: std::cout << "Portability"; break;
+        case GL_DEBUG_TYPE_PERFORMANCE: std::cout << "Performance"; break;
+        case GL_DEBUG_TYPE_MARKER: std::cout << "Marker"; break;
+        case GL_DEBUG_TYPE_PUSH_GROUP: std::cout << "Push Group"; break;
+        case GL_DEBUG_TYPE_POP_GROUP: std::cout << "Pop Group"; break;
+        case GL_DEBUG_TYPE_OTHER: std::cout << "Other"; break;
     }
     std::cout << std::endl;
 
+    std::cout << "Severity: ";
     switch (severity)
     {
-    case GL_DEBUG_SEVERITY_HIGH: std::cout << "Severity: high"; break;
-    case GL_DEBUG_SEVERITY_MEDIUM: std::cout << "Severity: medium"; break;
-    case GL_DEBUG_SEVERITY_LOW: std::cout << "Severity: low"; break;
-    case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
+        case GL_DEBUG_SEVERITY_HIGH: std::cout << "High"; break;
+        case GL_DEBUG_SEVERITY_MEDIUM: std::cout << "Medium"; break;
+        case GL_DEBUG_SEVERITY_LOW: std::cout << "Low"; break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Notification"; break;
     }
-    std::cout << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl
+              << std::endl;
 }

@@ -27,10 +27,8 @@ void SpriteRenderer::DrawSprite(SpriteEntityPtr pEntity)
 
     this->shader->Use();
     this->shader->SetMatrix4f("model", pEntity->GetTransformMatrix());
-    this->shader->SetMatrix4f("projection", Environment::GetOrthoProjectionMatrix());
+    this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
     this->shader->SetVector3f("tintColor", sprite->GetTint());
-
-    //std::cout << glm::to_string(Environment::GetOrthoProjectionMatrix()) << std::endl;
 
     glActiveTexture(GL_TEXTURE0);
     sprite->GetTexture()->Bind();
