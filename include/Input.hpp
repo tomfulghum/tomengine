@@ -2,6 +2,7 @@
 #define TOMENGINE_INPUT_HPP
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <map>
 
@@ -34,9 +35,10 @@ class Input
     friend class Environment;
 
 public:
-    static bool GetMouseButton(MouseButton button);
-    static bool GetMouseButtonDown(MouseButton button);
-    static bool GetMouseButtonUp(MouseButton button);
+    static bool GetMouseButton(const MouseButton button);
+    static bool GetMouseButtonDown(const MouseButton button);
+    static bool GetMouseButtonUp(const MouseButton button);
+    static glm::vec2 GetCursorPosition();
 
 private:
     static std::array<ButtonAction, 8> mouseButtonStates;
@@ -45,7 +47,7 @@ private:
     static double cursorPosY;
 
     static void UpdateButtonStates();
-    static MouseButton GetMouseButtonFromGlfw(int glfwButton);
+    static MouseButton GetMouseButtonFromGlfw(const int glfwButton);
 };
 
 } // namespace tomengine

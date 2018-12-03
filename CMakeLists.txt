@@ -16,6 +16,7 @@ set(CMAKE_BUILD_TYPE Debug)
 file(GLOB SOURCES 
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/Entity/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/Utility/*.cpp"
 )
 
 add_library(tomengine OBJECT

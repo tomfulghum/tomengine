@@ -4,6 +4,8 @@
 #include <memory>
 
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 
 #include "Environment.hpp"
 #include "Input.hpp"
@@ -42,7 +44,7 @@ void Minesweeper::Update()
     entMegumin->SetPosition(Environment::WindowWidth() / 2.0f, Environment::WindowHeight() / 2.0f);
     entMegumin->SetRotation(rot += Time::DeltaTime());
 
-    std::cout << Input::GetMouseButtonUp(MOUSE_0) << std::endl;
+    std::cout << glm::to_string(Input::GetCursorPosition()) << std::endl;
     //std::cout << entMegumin->GetRotation() << std::endl;
     //std::cout << "Update Minesweeper!" << std::endl;
 }

@@ -156,6 +156,8 @@ void Environment::KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int 
 
 void Environment::CursorPositionCallback(GLFWwindow* pWindow, double pPosX, double pPosY)
 {
+    Input::cursorPosX = pPosX;
+    Input::cursorPosY = pPosY;
 }
 
 void Environment::MouseButtonCallback(GLFWwindow* pWindow, int pButton, int pAction, int pMods)

@@ -3,20 +3,27 @@
 using namespace tomengine;
 
 std::array<ButtonAction, 8> Input::mouseButtonStates;
+double Input::cursorPosX;
+double Input::cursorPosY;
 
-bool Input::GetMouseButton(MouseButton pButton)
+bool Input::GetMouseButton(const MouseButton pButton)
 {
     return mouseButtonStates[pButton] == BUTTON_PRESSED;
 }
 
-bool Input::GetMouseButtonDown(MouseButton pButton)
+bool Input::GetMouseButtonDown(const MouseButton pButton)
 {
     return mouseButtonStates[pButton] == BUTTON_DOWN;
 }
 
-bool Input::GetMouseButtonUp(MouseButton pButton)
+bool Input::GetMouseButtonUp(const MouseButton pButton)
 {
     return mouseButtonStates[pButton] == BUTTON_UP;
+}
+
+glm::vec2 Input::GetCursorPosition()
+{
+    return glm::vec2(cursorPosX, cursorPosY);
 }
 
 void Input::UpdateButtonStates()
@@ -34,7 +41,7 @@ void Input::UpdateButtonStates()
     }
 }
 
-MouseButton Input::GetMouseButtonFromGlfw(int pGlfwButton)
+MouseButton Input::GetMouseButtonFromGlfw(const int pGlfwButton)
 {
     switch (pGlfwButton)
     {
