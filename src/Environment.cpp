@@ -12,8 +12,8 @@ using namespace tomengine;
 // Initialize static variables
 ApplicationPtr Environment::app;
 GLFWwindow* Environment::window;
-int Environment::windowWidth = 800;
-int Environment::windowHeight = 600;
+int Environment::windowWidth = 1;
+int Environment::windowHeight = 1;
 glm::mat4 Environment::orthoProjMatrix = glm::mat4(0.0f);
 std::string Environment::windowTitle = "TomEngine";
 float Environment::lastFrameTime;
@@ -33,7 +33,7 @@ void Environment::SetWindowDimensions(int pWidth, int pHeight)
 {
     if (window)
     {
-        FramebufferSizeCallback(window, pWidth, pHeight);
+        glfwSetWindowSize(window, pWidth, pHeight);
     }
 }
 
@@ -80,6 +80,7 @@ int Environment::Initialize()
     glViewport(0, 0, windowWidth, windowHeight);
     //glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
+    //glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glfwSetKeyCallback(window, KeyCallback);
@@ -95,7 +96,7 @@ int Environment::Initialize()
     return 0;
 }
 
-void Environment::Update()
+void Environment::Run()
 {
     while (!glfwWindowShouldClose(window))
     {
@@ -117,6 +118,8 @@ void Environment::Update()
 
         glfwSwapBuffers(window);
     }
+
+    Terminate();
 }
 
 void Environment::Terminate()

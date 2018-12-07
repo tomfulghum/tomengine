@@ -6,6 +6,7 @@ Texture2D::Texture2D() :
     width(0),
     height(0),
     internalFormat(GL_RGB),
+    imageFormat(GL_RGB),
     wrappingModeS(GL_REPEAT),
     wrappingModeT(GL_REPEAT),
     filterMin(GL_LINEAR),

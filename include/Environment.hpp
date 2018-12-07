@@ -27,7 +27,7 @@ public:
     static void SetWindowTitle(const std::string& title);
 
     static int Initialize();
-    static void Update();
+    static void Run();
     static void Terminate();
 
 private:

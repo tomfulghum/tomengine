@@ -15,6 +15,9 @@
 #include "Transformable.hpp"
 #include "Entity/SpriteEntity.hpp"
 
+#include "Grid.hpp"
+#include "GridRenderer.hpp"
+
 using namespace tomengine;
 
 Minesweeper::Minesweeper() :
@@ -28,23 +31,33 @@ Minesweeper::~Minesweeper()
 
 SpriteEntityPtr entMegumin;
 SpriteRendererPtr spriteRenderer;
+GridPtr grid;
+GridRenderer* gridRenderer;
 float rot = 0.0f;
 
 void Minesweeper::Initialize()
 {
     std::cout << "Initialize Minesweeper!" << std::endl;
+    Environment::SetWindowTitle("Minesweeper");
+    Environment::SetWindowDimensions(800, 600);
 
     Texture2DPtr texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
     entMegumin = std::make_shared<SpriteEntity>(texMegumin);
     spriteRenderer = std::make_shared<SpriteRenderer>();
+
+    grid = std::make_shared<Grid>(16, 16);
+    grid->Generate(40);
+    grid->Visualize();
+
+    gridRenderer = new GridRenderer(spriteRenderer);
 }
 
 void Minesweeper::Update()
 {
     entMegumin->SetPosition(Environment::WindowWidth() / 2.0f, Environment::WindowHeight() / 2.0f);
-    entMegumin->SetRotation(rot += Time::DeltaTime());
+    entMegumin->SetRotation(rot += 10.0f * Time::DeltaTime());
 
-    std::cout << glm::to_string(Input::GetCursorPosition()) << std::endl;
+    //std::cout << glm::to_string(Input::GetCursorPosition()) << std::endl;
     //std::cout << entMegumin->GetRotation() << std::endl;
     //std::cout << "Update Minesweeper!" << std::endl;
 }
@@ -52,6 +65,7 @@ void Minesweeper::Update()
 void Minesweeper::Render()
 {
     spriteRenderer->DrawSprite(entMegumin);
+    gridRenderer->Render(grid);
     //std::cout << "Render Minesweeper!" << std::endl;
 }
 
@@ -67,12 +81,7 @@ int main(int argc, char const* argv[])
     Environment::SetApplication(game);
 
     Environment::Initialize();
-
-    Environment::SetWindowDimensions(800, 600);
-    Environment::SetWindowTitle("Minesweeper");
-
-    Environment::Update();
-    Environment::Terminate();
+    Environment::Run();
 
     return 0;
 }

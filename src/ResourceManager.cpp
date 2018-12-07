@@ -78,6 +78,7 @@ Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
     {
         if (channels == 4)
         {
+            std::cout << channels << std::endl;
             texture->SetInternalFormat(GL_RGBA);
             texture->SetImageFormat(GL_RGBA);
         }
