@@ -10,6 +10,19 @@
 namespace tomengine
 {
 
+enum AnchorPosition
+{
+    ANCHOR_TOPLEFT,
+    ANCHOR_BOTTOMLEFT,
+    ANCHOR_TOPRIGHT,
+    ANCHOR_BOTTOMRIGHT,
+    ANCHOR_TOP,
+    ANCHOR_BOTTOM,
+    ANCHOR_LEFT,
+    ANCHOR_RIGHT,
+    ANCHOR_MIDDLE
+};
+
 class SpriteRenderer : public Component
 {
     COMPONENT_DECLARATION(SpriteRenderer)
@@ -19,6 +32,7 @@ public:
     SpriteRenderer(SpritePtr sprite);
 
     void SetSprite(SpritePtr sprite);
+    void SetAnchorPosition(AnchorPosition anchor);
 
     void Update() override {}
     void Render() override;

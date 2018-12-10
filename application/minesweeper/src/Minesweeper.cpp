@@ -35,6 +35,7 @@ EntityPtr entMegumin;
 //GridPtr grid;
 //GridRenderer* gridRenderer;
 float rot = 0.0f;
+float scale = 0.0f;
 
 void Minesweeper::Initialize()
 {
@@ -45,8 +46,9 @@ void Minesweeper::Initialize()
     entMegumin = std::make_shared<Entity>();
     Texture2DPtr texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
     SpritePtr spriteMegumin = std::make_shared<Sprite>(texMegumin);
-    entMegumin->AddComponent<SpriteRenderer>();
-    entMegumin->GetComponent<SpriteRenderer>().SetSprite(spriteMegumin);
+    entMegumin->AddComponent<SpriteRenderer>(spriteMegumin);
+    entMegumin->GetComponent<SpriteRenderer>().SetAnchorPosition(ANCHOR_MIDDLE);
+    entMegumin->SetScale(texMegumin->GetWidth(), texMegumin->GetHeight());
 
     /*
     grid = std::make_shared<Grid>(16, 16);
@@ -61,6 +63,7 @@ void Minesweeper::Update()
 {
     entMegumin->SetPosition(Environment::WindowWidth() / 2.0f, Environment::WindowHeight() / 2.0f);
     entMegumin->SetRotation(rot += 10.0f * Time::DeltaTime());
+    //entMegumin->SetScale(glm::vec3(scale += 0.1f * Time::DeltaTime()));
 
     //std::cout << glm::to_string(Input::GetCursorPosition()) << std::endl;
     //std::cout << entMegumin->GetRotation() << std::endl;

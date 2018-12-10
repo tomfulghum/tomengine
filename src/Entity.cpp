@@ -5,7 +5,6 @@ using namespace tomengine;
 
 Entity::~Entity()
 {
-    components.clear();
 }
 
 void Entity::Update()

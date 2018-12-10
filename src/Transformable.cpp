@@ -30,11 +30,13 @@ void Transformable::SetScale(const glm::vec3& pScale)
 void Transformable::SetScale(const float pX, const float pY, const float pZ)
 {
     this->SetScale(glm::vec3(pX, pY, pZ));
+    this->changed = true;
 }
 
 void Transformable::SetScale(const float pX, const float pY)
 {
     this->SetScale(glm::vec3(pX, pY, 0.0f));
+    this->changed = true;
 }
 
 void Transformable::SetPivot(const glm::vec3& pPivot)
@@ -46,11 +48,13 @@ void Transformable::SetPivot(const glm::vec3& pPivot)
 void Transformable::SetPivot(const float pX, const float pY, const float pZ)
 {
     this->SetPivot(glm::vec3(pX, pY, pZ));
+    this->changed = true;
 }
 
 void Transformable::SetPivot(const float pX, const float pY)
 {
     this->SetPivot(glm::vec3(pX, pY, 0.0f));
+    this->changed = true;
 }
 
 void Transformable::SetRotation(const float pRotation)
@@ -74,11 +78,13 @@ void Transformable::SetPosition(const glm::vec3& pPosition)
 void Transformable::SetPosition(const float pX, const float pY, const float pZ)
 {
     this->SetPosition(glm::vec3(pX, pY, pZ));
+    this->changed = true;
 }
 
 void Transformable::SetPosition(const float pX, const float pY)
 {
     this->SetPosition(glm::vec3(pX, pY, 0.0f));
+    this->changed = true;
 }
 
 void Transformable::CalculateTransformMatrix()
@@ -97,4 +103,14 @@ void Transformable::CalculateTransformMatrix()
     trans = glm::scale(trans, transform.scale);
 
     this->transformMatrix = trans;
+
+    /*
+    glm::mat4 pivotNeg = glm::translate(glm::mat4(1.0f), -this->transform.pivot);
+    glm::mat4 scale = glm::scale(glm::mat4(1.0f), this->transform.scale);
+    glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), this->transform.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4 pivotPos = glm::translate(glm::mat4(1.0f), this->transform.pivot);
+    glm::mat4 translate = glm::translate(glm::mat4(1.0f), this->transform.position);
+
+    this->transformMatrix = pivotNeg * scale * rotate * pivotPos * translate;
+    */
 }

@@ -35,17 +35,54 @@ void SpriteRenderer::SetSprite(SpritePtr pSprite)
     this->sprite = pSprite;
 }
 
+void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
+{
+    Texture2DPtr texture = this->sprite->GetTexture();
+    switch (pAnchor)
+    {
+        case ANCHOR_TOPLEFT:
+            this->entity->SetPivot(0.0f, 0.0f);
+            break;
+        case ANCHOR_BOTTOMLEFT:
+            this->entity->SetPivot(0.0f, texture->GetHeight());
+            break;
+        case ANCHOR_TOPRIGHT:
+            this->entity->SetPivot(texture->GetWidth(), 0.0f);
+            break;
+        case ANCHOR_BOTTOMRIGHT:
+            this->entity->SetPivot(texture->GetWidth(), texture->GetHeight());
+            break;
+        case ANCHOR_TOP:
+            this->entity->SetPivot(texture->GetWidth() * 0.5f, 0.0f);
+            break;
+        case ANCHOR_BOTTOM:
+            this->entity->SetPivot(texture->GetWidth() * 0.5f, texture->GetHeight());
+            break;
+        case ANCHOR_LEFT:
+            this->entity->SetPivot(0.0f, texture->GetHeight() * 0.5f);
+            break;
+        case ANCHOR_RIGHT:
+            this->entity->SetPivot(texture->GetWidth(), texture->GetHeight() * 0.5f);
+            break;
+        case ANCHOR_MIDDLE:
+            this->entity->SetPivot(texture->GetWidth() * 0.5f, texture->GetHeight() * 0.5f);
+            break;
+    }
+}
+
 void SpriteRenderer::Render()
 {
     if (this->sprite)
     {
         this->shader->Use();
+
+        Texture2DPtr texture = this->sprite->GetTexture();
         this->shader->SetMatrix4f("model", this->entity->GetTransformMatrix());
         this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
         this->shader->SetVector3f("tintColor", this->sprite->GetTint());
 
         glActiveTexture(GL_TEXTURE0);
-        this->sprite->GetTexture()->Bind();
+        texture->Bind();
 
         glBindVertexArray(this->vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -59,7 +96,6 @@ void SpriteRenderer::InitRenderData()
 
     if (this->vao == 0)
     {
-        std::cout << "Beep!" << std::endl;
         // clang-format off
         float vertices[] = {
             // Position  // UV
@@ -110,8 +146,6 @@ void SpriteRenderer::InitShader()
 
     if (!shader)
     {
-        std::cout << "Boop!" << std::endl;
-
         std::string vertexSource = R"(
             #version 330 core
 
