@@ -15,7 +15,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 file(GLOB SOURCES 
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_SOURCE_DIR}/src/Entity/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/Component/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/Utility/*.cpp"
 )
 
@@ -36,4 +36,8 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/application")
 
 target_link_libraries(tomengine
     glfw
+)
+
+set_target_properties(tomengine PROPERTIES
+    CXX_STANDARD 17
 )

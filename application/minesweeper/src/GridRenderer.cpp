@@ -4,6 +4,7 @@
 
 using namespace tomengine;
 
+/*
 GridRenderer::GridRenderer(SpriteRendererPtr pSpriteRenderer) :
     spriteRenderer(pSpriteRenderer)
 {
@@ -40,3 +41,4 @@ void GridRenderer::Render(GridPtr pGrid)
 {
     spriteRenderer->DrawSprite(sprites[pGrid->GetNode(0, 0).GetState()]);
 }
+*/

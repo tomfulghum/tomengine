@@ -10,10 +10,10 @@
 #include "Environment.hpp"
 #include "Input.hpp"
 #include "ResourceManager.hpp"
-#include "SpriteRenderer.hpp"
+#include "Component/SpriteRenderer.hpp"
 #include "Time.hpp"
 #include "Transformable.hpp"
-#include "Entity/SpriteEntity.hpp"
+#include "SpriteEntity.hpp"
 
 #include "Grid.hpp"
 #include "GridRenderer.hpp"
@@ -29,10 +29,11 @@ Minesweeper::~Minesweeper()
 {
 }
 
-SpriteEntityPtr entMegumin;
-SpriteRendererPtr spriteRenderer;
-GridPtr grid;
-GridRenderer* gridRenderer;
+EntityPtr entMegumin;
+//SpriteEntityPtr entMegumin;
+//SpriteRendererPtr spriteRenderer;
+//GridPtr grid;
+//GridRenderer* gridRenderer;
 float rot = 0.0f;
 
 void Minesweeper::Initialize()
@@ -41,15 +42,19 @@ void Minesweeper::Initialize()
     Environment::SetWindowTitle("Minesweeper");
     Environment::SetWindowDimensions(800, 600);
 
+    entMegumin = std::make_shared<Entity>();
     Texture2DPtr texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
-    entMegumin = std::make_shared<SpriteEntity>(texMegumin);
-    spriteRenderer = std::make_shared<SpriteRenderer>();
+    SpritePtr spriteMegumin = std::make_shared<Sprite>(texMegumin);
+    entMegumin->AddComponent<SpriteRenderer>();
+    entMegumin->GetComponent<SpriteRenderer>().SetSprite(spriteMegumin);
 
+    /*
     grid = std::make_shared<Grid>(16, 16);
     grid->Generate(40);
     grid->Visualize();
 
     gridRenderer = new GridRenderer(spriteRenderer);
+    */
 }
 
 void Minesweeper::Update()
@@ -64,14 +69,13 @@ void Minesweeper::Update()
 
 void Minesweeper::Render()
 {
-    spriteRenderer->DrawSprite(entMegumin);
-    gridRenderer->Render(grid);
+    entMegumin->Render();
+    //gridRenderer->Render(grid);
     //std::cout << "Render Minesweeper!" << std::endl;
 }
 
 void Minesweeper::Terminate()
 {
-    spriteRenderer.reset();
     std::cout << "Terminate Minesweeper!" << std::endl;
 }
 

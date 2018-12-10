@@ -4,6 +4,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Application.hpp"
 #include "Input.hpp"
 #include "Time.hpp"
 

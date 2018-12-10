@@ -3,7 +3,8 @@
 
 #include <list>
 
-#include "Entity/Entity.hpp"
+#include "Common.hpp"
+#include "Entity.hpp"
 
 namespace tomengine
 {

@@ -1,14 +1,10 @@
 #ifndef TOMENGINE_APPLICATION_HPP
 #define TOMENGINE_APPLICATION_HPP
 
-#include <memory>
+#include "Common.hpp"
 
 namespace tomengine
 {
-
-class Application;
-typedef std::shared_ptr<Application> ApplicationPtr;
-typedef std::weak_ptr<Application> ApplicationPtrW;
 
 class Application
 {

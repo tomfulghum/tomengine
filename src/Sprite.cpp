@@ -1,3 +1,4 @@
+#include "ResourceManager.hpp"
 #include "Sprite.hpp"
 
 using namespace tomengine;

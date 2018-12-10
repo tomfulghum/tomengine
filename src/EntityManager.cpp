@@ -1,6 +1,8 @@
-#include "Entity/EntityManager.hpp"
+#include "EntityManager.hpp"
 
 using namespace tomengine;
+
+std::list<EntityPtr> EntityManager::entities;
 
 EntityPtr EntityManager::CreateEntity()
 {

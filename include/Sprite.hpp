@@ -1,18 +1,14 @@
 #ifndef TOMENGINE_SPRITE_HPP
 #define TOMENGINE_SPRITE_HPP
 
-#include <memory>
 #include <string>
 
-#include "ResourceManager.hpp"
-#include "Texture2D.hpp"
+#include <glm/glm.hpp>
+
+#include "Common.hpp"
 
 namespace tomengine
 {
-
-class Sprite;
-typedef std::shared_ptr<Sprite> SpritePtr;
-typedef std::weak_ptr<Sprite> SpritePtrW;
 
 class Sprite
 {

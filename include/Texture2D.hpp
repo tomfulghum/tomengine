@@ -1,16 +1,12 @@
 #ifndef TOMENGINE_TEXTURE2D_HPP
 #define TOMENGINE_TEXTURE2D_HPP
 
-#include <memory>
-
 #include <glad/glad.h>
+
+#include "Common.hpp"
 
 namespace tomengine
 {
-
-class Texture2D;
-typedef std::shared_ptr<Texture2D> Texture2DPtr;
-typedef std::weak_ptr<Texture2D> Texture2DPtrW;
 
 class Texture2D
 {

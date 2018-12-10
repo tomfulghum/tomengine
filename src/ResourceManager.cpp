@@ -8,10 +8,14 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include "Shader.hpp"
+#include "Texture2D.hpp"
+
 using namespace tomengine;
 
 std::map<std::string, ShaderPtr> ResourceManager::Shaders;
 std::map<std::string, Texture2DPtr> ResourceManager::Textures;
+std::map<std::string, unsigned int> ResourceManager::VertexArrayObjects;
 
 ShaderPtr ResourceManager::LoadShaderFiles(const std::string& pName, const std::string& pVertShaderFile, const std::string& pFragShaderFile, const std::string& pGeomShaderFile)
 {
@@ -51,6 +55,17 @@ Texture2DPtr ResourceManager::GetTexture2D(const std::string& pName)
     return Textures[pName];
 }
 
+int ResourceManager::SaveVertexArrayOject(const std::string& pName, const int pVao)
+{
+    VertexArrayObjects[pName] = pVao;
+    return VertexArrayObjects[pName];
+}
+
+int ResourceManager::GetVertexArrayObject(const std::string& pName)
+{
+    return VertexArrayObjects[pName];
+}
+
 void ResourceManager::Clear()
 {
     for (auto iShader : Shaders)
@@ -61,9 +76,14 @@ void ResourceManager::Clear()
     {
         glDeleteTextures(1, &iTexture2D.second->ID);
     }
+    for (auto iVertexArrayObject : VertexArrayObjects)
+    {
+        glDeleteVertexArrays(1, &iVertexArrayObject.second);
+    }
 
     Shaders.clear();
     Textures.clear();
+    VertexArrayObjects.clear();
 }
 
 Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
@@ -78,7 +98,6 @@ Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
     {
         if (channels == 4)
         {
-            std::cout << channels << std::endl;
             texture->SetInternalFormat(GL_RGBA);
             texture->SetImageFormat(GL_RGBA);
         }

@@ -1,4 +1,4 @@
-#include "Entity/SpriteEntity.hpp"
+#include "SpriteEntity.hpp"
 
 using namespace tomengine;
 

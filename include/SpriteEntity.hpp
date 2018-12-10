@@ -3,7 +3,8 @@
 
 #include <memory>
 
-#include "Entity/Entity.hpp"
+#include "Common.hpp"
+#include "Entity.hpp"
 #include "Sprite.hpp"
 #include "Texture2D.hpp"
 

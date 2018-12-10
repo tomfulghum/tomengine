@@ -1,18 +1,15 @@
 #ifndef TOMENGINE_SHADER_HPP
 #define TOMENGINE_SHADER_HPP
 
-#include <memory>
 #include <string>
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
+#include "Common.hpp"
+
 namespace tomengine
 {
-
-class Shader;
-typedef std::shared_ptr<Shader> ShaderPtr;
-typedef std::weak_ptr<Shader> ShaderPtrW;
 
 class Shader
 {

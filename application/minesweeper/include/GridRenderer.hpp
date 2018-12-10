@@ -4,11 +4,12 @@
 #include <vector>
 
 #include "Grid.hpp"
-#include "Entity/SpriteEntity.hpp"
-#include "SpriteRenderer.hpp"
+#include "SpriteEntity.hpp"
+#include "Component/SpriteRenderer.hpp"
 
 class GridRenderer
 {
+    /*
 public:
     GridRenderer(tomengine::SpriteRendererPtr spriteRenderer);
 
@@ -17,6 +18,7 @@ public:
 private:
     tomengine::SpriteRendererPtr spriteRenderer;
     std::vector<tomengine::SpriteEntityPtr> sprites;
+    */
 };
 
 #endif
