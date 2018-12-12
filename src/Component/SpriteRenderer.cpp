@@ -36,34 +36,36 @@ void SpriteRenderer::SetSprite(SpritePtr pSprite)
 void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
 {
     Texture2DPtr texture = this->sprite->GetTexture();
+    EntityPtr ent = this->entity.lock();
+
     switch (pAnchor)
     {
         case ANCHOR_TOPLEFT:
-            this->entity->SetPivot(0.0f, 0.0f);
+            ent->SetPivot(0.0f, 0.0f);
             break;
         case ANCHOR_BOTTOMLEFT:
-            this->entity->SetPivot(0.0f, 1.0f);
+            ent->SetPivot(0.0f, 1.0f);
             break;
         case ANCHOR_TOPRIGHT:
-            this->entity->SetPivot(1.0f, 0.0f);
+            ent->SetPivot(1.0f, 0.0f);
             break;
         case ANCHOR_BOTTOMRIGHT:
-            this->entity->SetPivot(1.0f, 1.0f);
+            ent->SetPivot(1.0f, 1.0f);
             break;
         case ANCHOR_TOP:
-            this->entity->SetPivot(0.5f, 0.0f);
+            ent->SetPivot(0.5f, 0.0f);
             break;
         case ANCHOR_BOTTOM:
-            this->entity->SetPivot(0.5f, 1.0f);
+            ent->SetPivot(0.5f, 1.0f);
             break;
         case ANCHOR_LEFT:
-            this->entity->SetPivot(0.0f, 0.5f);
+            ent->SetPivot(0.0f, 0.5f);
             break;
         case ANCHOR_RIGHT:
-            this->entity->SetPivot(1.0f, 0.5f);
+            ent->SetPivot(1.0f, 0.5f);
             break;
         case ANCHOR_MIDDLE:
-            this->entity->SetPivot(0.5f, 0.5f);
+            ent->SetPivot(0.5f, 0.5f);
             break;
     }
 }
@@ -75,7 +77,7 @@ void SpriteRenderer::Render()
         this->shader->Use();
 
         Texture2DPtr texture = this->sprite->GetTexture();
-        this->shader->SetMatrix4f("model", this->entity->GetTransformMatrix());
+        this->shader->SetMatrix4f("model", this->entity.lock()->GetTransformMatrix());
         this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
         this->shader->SetVector3f("tintColor", this->sprite->GetTint());
 
@@ -188,10 +190,12 @@ void SpriteRenderer::InitShader()
 
 void SpriteRenderer::InitTexture()
 {
-    if (this->entity && this->sprite)
+    EntityPtr ent = this->entity.lock();
+
+    if (ent && this->sprite)
     {
         Texture2DPtr texture = this->sprite->GetTexture();
-        this->entity->SetScale(texture->GetWidth(), texture->GetHeight());
+        ent->SetScale(texture->GetWidth(), texture->GetHeight());
         texture->SetFilterMin(GL_NEAREST);
         texture->SetFilterMag(GL_NEAREST);
 

@@ -1,5 +1,6 @@
 #include "Environment.hpp"
 
+#include <chrono>
 #include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,7 +18,7 @@ int Environment::windowWidth = 1;
 int Environment::windowHeight = 1;
 glm::mat4 Environment::orthoProjMatrix = glm::mat4(0.0f);
 std::string Environment::windowTitle = "TomEngine";
-float Environment::lastFrameTime;
+double Environment::lastFrameTime;
 bool Environment::Keys[1024];
 
 bool Environment::GetKey(int pKey)
@@ -101,9 +102,9 @@ void Environment::Run()
 {
     while (!glfwWindowShouldClose(window))
     {
-        float currentFrameTime = glfwGetTime();
-        Time::deltaTime = currentFrameTime - lastFrameTime;
-        lastFrameTime = currentFrameTime;
+        Time::runTime = glfwGetTime();
+        Time::deltaTime = Time::runTime - lastFrameTime;
+        lastFrameTime = Time::runTime;
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

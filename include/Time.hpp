@@ -9,10 +9,12 @@ class Time
     friend class Environment;
 
 public:
-    static float DeltaTime();
+    static double DeltaTime();
+    static double RunTime();
 
 private:
-    static float deltaTime;
+    static double deltaTime;
+    static double runTime;
 };
 
 } // namespace tomengine

@@ -1,5 +1,6 @@
-#include "Component/Component.hpp"
 #include "Entity.hpp"
+
+#include "Component/Component.hpp"
 
 using namespace tomengine;
 

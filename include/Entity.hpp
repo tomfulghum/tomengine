@@ -15,7 +15,7 @@ class Entity : public Transformable, public std::enable_shared_from_this<Entity>
 {
 public:
     Entity() {}
-    ~Entity();
+    virtual ~Entity();
 
     virtual void Update();
     virtual void Render();

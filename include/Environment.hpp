@@ -39,7 +39,7 @@ private:
     static int windowHeight;
     static glm::mat4 orthoProjMatrix;
     static std::string windowTitle;
-    static float lastFrameTime;
+    static double lastFrameTime;
     static bool Keys[1024];
 
     static void SetKey(int key, bool pressed);

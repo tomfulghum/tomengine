@@ -1,6 +1,7 @@
 #include "Minesweeper.hpp"
 
 #include <iostream>
+#include <cmath>
 #include <memory>
 
 #include <glm/glm.hpp>
@@ -42,14 +43,14 @@ void Minesweeper::Initialize()
 {
     std::cout << "Initialize Minesweeper!" << std::endl;
     Environment::SetWindowTitle("Minesweeper");
-    Environment::SetWindowDimensions(800, 600);
+    Environment::SetWindowDimensions(1280, 960);
 
     entMegumin = std::make_shared<Entity>();
     texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
     SpritePtr spriteMegumin = std::make_shared<Sprite>(texMegumin);
     entMegumin->AddComponent<SpriteRenderer>(spriteMegumin);
     entMegumin->GetComponent<SpriteRenderer>().SetAnchorPosition(ANCHOR_MIDDLE);
-    //entMegumin->SetScale(texMegumin->GetWidth() * 0.5f, texMegumin->GetHeight() * 0.5f);
+    entMegumin->SetScale(texMegumin->GetWidth() * 0.5f, texMegumin->GetHeight() * 0.5f);
 
     /*
     grid = std::make_shared<Grid>(16, 16);
@@ -62,13 +63,11 @@ void Minesweeper::Initialize()
 
 void Minesweeper::Update()
 {
-    entMegumin->SetPosition(Environment::WindowWidth() / 2.0f, Environment::WindowHeight() / 2.0f);
-    entMegumin->SetRotation(rot += 10.0f * Time::DeltaTime());
-    entMegumin->SetScale(glm::vec3(texMegumin->GetWidth(), texMegumin->GetHeight(), 0.0f) * (scale += 0.1f * Time::DeltaTime()));
-
-    //std::cout << glm::to_string(Input::GetCursorPosition()) << std::endl;
-    //std::cout << entMegumin->GetRotation() << std::endl;
-    //std::cout << "Update Minesweeper!" << std::endl;
+    float xPos = Environment::WindowWidth() / 2.0f + (200.0f * std::sin(Time::RunTime()));
+    float yPos = Environment::WindowHeight() / 2.0f + (200.0f * -std::cos(Time::RunTime()));
+    entMegumin->SetPosition(xPos, yPos);
+    entMegumin->SetRotation(rot += 100.0f * Time::DeltaTime());
+    //entMegumin->SetScale(glm::vec3(texMegumin->GetWidth(), texMegumin->GetHeight(), 0.0f) * (scale += 0.1f * Time::DeltaTime()));
 }
 
 void Minesweeper::Render()

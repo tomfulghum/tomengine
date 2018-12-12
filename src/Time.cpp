@@ -2,9 +2,15 @@
 
 using namespace tomengine;
 
-float Time::deltaTime;
+double Time::deltaTime;
+double Time::runTime;
 
-float Time::DeltaTime()
+double Time::DeltaTime()
 {
     return deltaTime;
+}
+
+double Time::RunTime()
+{
+    return runTime;
 }

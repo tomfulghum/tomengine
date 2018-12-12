@@ -42,13 +42,13 @@ public:
     static const std::size_t Type;
     virtual bool IsClassType(const std::size_t classType) const { return classType == Type; }
 
-    EntityPtr GetEntity() { return this->entity; }
+    EntityWPtr GetEntity() { return this->entity; }
 
     virtual void Update() = 0;
     virtual void Render() = 0;
 
 protected:
-    EntityPtr entity;
+    EntityWPtr entity;
 };
 
 } // namespace tomengine
