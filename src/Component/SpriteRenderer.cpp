@@ -3,9 +3,6 @@
 #include <iostream>
 #include <string>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
-
 #include "Entity.hpp"
 #include "Environment.hpp"
 #include "ResourceManager.hpp"
@@ -20,8 +17,9 @@ COMPONENT_DEFINITION(Component, SpriteRenderer)
 SpriteRenderer::SpriteRenderer() :
     Component()
 {
-    InitRenderData();
-    InitShader();
+    this->initialized = false;
+    this->InitRenderData();
+    this->InitShader();
 }
 
 SpriteRenderer::SpriteRenderer(SpritePtr pSprite) :
@@ -44,35 +42,35 @@ void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
             this->entity->SetPivot(0.0f, 0.0f);
             break;
         case ANCHOR_BOTTOMLEFT:
-            this->entity->SetPivot(0.0f, texture->GetHeight());
+            this->entity->SetPivot(0.0f, 1.0f);
             break;
         case ANCHOR_TOPRIGHT:
-            this->entity->SetPivot(texture->GetWidth(), 0.0f);
+            this->entity->SetPivot(1.0f, 0.0f);
             break;
         case ANCHOR_BOTTOMRIGHT:
-            this->entity->SetPivot(texture->GetWidth(), texture->GetHeight());
+            this->entity->SetPivot(1.0f, 1.0f);
             break;
         case ANCHOR_TOP:
-            this->entity->SetPivot(texture->GetWidth() * 0.5f, 0.0f);
+            this->entity->SetPivot(0.5f, 0.0f);
             break;
         case ANCHOR_BOTTOM:
-            this->entity->SetPivot(texture->GetWidth() * 0.5f, texture->GetHeight());
+            this->entity->SetPivot(0.5f, 1.0f);
             break;
         case ANCHOR_LEFT:
-            this->entity->SetPivot(0.0f, texture->GetHeight() * 0.5f);
+            this->entity->SetPivot(0.0f, 0.5f);
             break;
         case ANCHOR_RIGHT:
-            this->entity->SetPivot(texture->GetWidth(), texture->GetHeight() * 0.5f);
+            this->entity->SetPivot(1.0f, 0.5f);
             break;
         case ANCHOR_MIDDLE:
-            this->entity->SetPivot(texture->GetWidth() * 0.5f, texture->GetHeight() * 0.5f);
+            this->entity->SetPivot(0.5f, 0.5f);
             break;
     }
 }
 
 void SpriteRenderer::Render()
 {
-    if (this->sprite)
+    if (this->initialized)
     {
         this->shader->Use();
 
@@ -87,6 +85,10 @@ void SpriteRenderer::Render()
         glBindVertexArray(this->vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+    }
+    else
+    {
+        this->InitTexture();
     }
 }
 
@@ -116,8 +118,6 @@ void SpriteRenderer::InitRenderData()
         glGenVertexArrays(1, &this->vao);
         glGenBuffers(1, &vbo);
         glGenBuffers(1, &ebo);
-
-        std::cout << this->vao << " " << vbo << " " << ebo << std::endl;
 
         glBindVertexArray(this->vao);
 
@@ -183,5 +183,18 @@ void SpriteRenderer::InitShader()
         this->shader = ResourceManager::LoadShaderSource("builtin_sprite", vertexSource, fragmentSource);
         this->shader->Use();
         this->shader->SetInteger("sprite", 0);
+    }
+}
+
+void SpriteRenderer::InitTexture()
+{
+    if (this->entity && this->sprite)
+    {
+        Texture2DPtr texture = this->sprite->GetTexture();
+        this->entity->SetScale(texture->GetWidth(), texture->GetHeight());
+        texture->SetFilterMin(GL_NEAREST);
+        texture->SetFilterMag(GL_NEAREST);
+
+        this->initialized = true;
     }
 }

@@ -25,6 +25,22 @@ void Texture2D::SetImageFormat(GLuint pFormat)
     this->imageFormat = pFormat;
 }
 
+void Texture2D::SetFilterMin(GLuint pFilter)
+{
+    this->filterMin = pFilter;
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->filterMin);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture2D::SetFilterMag(GLuint pFilter)
+{
+    this->filterMag = pFilter;
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->filterMag);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void Texture2D::Generate(const unsigned int pWidth, const unsigned int pHeight, const unsigned char* pData)
 {
     this->width = pWidth;

@@ -17,8 +17,8 @@ public:
     Entity() {}
     ~Entity();
 
-    void Update();
-    void Render();
+    virtual void Update();
+    virtual void Render();
 
     template <class ComponentType, typename... Args>
     void AddComponent(Args&&... parameters);

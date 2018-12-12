@@ -26,6 +26,8 @@ public:
 
     void SetInternalFormat(const unsigned int format);
     void SetImageFormat(const unsigned int format);
+    void SetFilterMin(const unsigned int filter);
+    void SetFilterMag(const unsigned int filter);
 
     void Generate(const unsigned int width, const unsigned int height, const unsigned char* data);
     void Bind() const;

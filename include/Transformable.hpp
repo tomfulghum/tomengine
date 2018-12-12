@@ -31,9 +31,6 @@ public:
     void SetScale(const glm::vec3& scale);
     void SetScale(const float x, const float y, const float z);
     void SetScale(const float x, const float y);
-    void SetBaseScale(const glm::vec3& scale);
-    void SetBaseScale(const float x, const float y, const float z);
-    void SetBaseScale(const float x, const float y);
     void SetPivot(const glm::vec3& pivot);
     void SetPivot(const float x, const float y, const float z);
     void SetPivot(const float x, const float y);

@@ -41,9 +41,11 @@ private:
     SpritePtr sprite;
     ShaderPtr shader;
     unsigned int vao;
+    bool initialized;
 
     void InitRenderData();
     void InitShader();
+    void InitTexture();
 };
 
 } // namespace tomengine
