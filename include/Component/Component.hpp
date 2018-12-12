@@ -12,11 +12,13 @@
 
 #define TO_STRING(x) #x
 
+// Declares variables and functions needed for determining component type
 #define COMPONENT_DECLARATION(componentName) \
 public:                                      \
     static const std::size_t Type;           \
     virtual bool IsClassType(const std::size_t classType) const override;
 
+// Implements the variables and functions declared by COMPONENT_DECLARATION
 #define COMPONENT_DEFINITION(parent, child)                                     \
     const std::size_t child::Type = std::hash<std::string>()(TO_STRING(child)); \
     bool child::IsClassType(const std::size_t classType) const                  \

@@ -5,16 +5,15 @@
 #include <memory>
 
 #include <glm/glm.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
 
+#include "Entity.hpp"
 #include "Environment.hpp"
 #include "Input.hpp"
 #include "ResourceManager.hpp"
 #include "Component/SpriteRenderer.hpp"
+#include "Texture2D.hpp"
 #include "Time.hpp"
 #include "Transformable.hpp"
-#include "SpriteEntity.hpp"
 
 #include "Grid.hpp"
 #include "GridRenderer.hpp"

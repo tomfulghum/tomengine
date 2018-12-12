@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Grid.hpp"
-#include "SpriteEntity.hpp"
 #include "Component/SpriteRenderer.hpp"
 
 class GridRenderer
