@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
 project(tomengine)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
 set(EXTERNAL_DIRECTORY "${CMAKE_SOURCE_DIR}/external")
+
+include(cotire)
 
 # GLFW build settings
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -39,5 +42,7 @@ target_link_libraries(tomengine
 )
 
 set_target_properties(tomengine PROPERTIES
-    CXX_STANDARD 17
+    COTIRE_PREFIX_HEADER_IGNORE_PATH "${EXTERNAL_DIRECTORY}/glad/"
 )
+
+#cotire(tomengine)
