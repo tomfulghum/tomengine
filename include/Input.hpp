@@ -9,16 +9,14 @@
 namespace tomengine
 {
 
-enum ButtonAction
-{
+enum ButtonAction {
     BUTTON_NONE,
     BUTTON_DOWN,
     BUTTON_PRESSED,
     BUTTON_UP
 };
 
-enum MouseButton
-{
+enum MouseButton {
     MOUSE_INVALID,
     MOUSE_0,
     MOUSE_1,

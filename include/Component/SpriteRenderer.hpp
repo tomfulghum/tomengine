@@ -10,8 +10,7 @@
 namespace tomengine
 {
 
-enum AnchorPosition
-{
+enum AnchorPosition {
     ANCHOR_TOPLEFT,
     ANCHOR_BOTTOMLEFT,
     ANCHOR_TOPRIGHT,

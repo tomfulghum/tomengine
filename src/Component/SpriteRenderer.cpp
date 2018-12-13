@@ -38,8 +38,7 @@ void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
     Texture2DPtr texture = this->sprite->GetTexture();
     EntityPtr ent = this->entity.lock();
 
-    switch (pAnchor)
-    {
+    switch (pAnchor) {
         case ANCHOR_TOPLEFT:
             ent->SetPivot(0.0f, 0.0f);
             break;
@@ -72,8 +71,7 @@ void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
 
 void SpriteRenderer::Render()
 {
-    if (this->initialized)
-    {
+    if (this->initialized) {
         this->shader->Use();
 
         Texture2DPtr texture = this->sprite->GetTexture();
@@ -87,9 +85,7 @@ void SpriteRenderer::Render()
         glBindVertexArray(this->vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-    }
-    else
-    {
+    } else {
         this->InitTexture();
     }
 }
@@ -98,8 +94,7 @@ void SpriteRenderer::InitRenderData()
 {
     this->vao = ResourceManager::GetVertexArrayObject("builtin_sprite");
 
-    if (this->vao == 0)
-    {
+    if (this->vao == 0) {
         // clang-format off
         float vertices[] = {
             // Position  // UV
@@ -146,8 +141,7 @@ void SpriteRenderer::InitShader()
 {
     this->shader = ResourceManager::GetShader("builtin_sprite");
 
-    if (!shader)
-    {
+    if (!shader) {
         std::string vertexSource = R"(
             #version 330 core
 
@@ -192,8 +186,7 @@ void SpriteRenderer::InitTexture()
 {
     EntityPtr ent = this->entity.lock();
 
-    if (ent && this->sprite)
-    {
+    if (ent && this->sprite) {
         Texture2DPtr texture = this->sprite->GetTexture();
         ent->SetBaseScale(texture->GetWidth(), texture->GetHeight());
         texture->SetFilterMin(GL_NEAREST_MIPMAP_LINEAR);

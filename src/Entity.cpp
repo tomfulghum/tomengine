@@ -10,16 +10,14 @@ Entity::~Entity()
 
 void Entity::Update()
 {
-    for (auto& iComponent : components)
-    {
+    for (auto& iComponent : components) {
         iComponent->Update();
     }
 }
 
 void Entity::Render()
 {
-    for (auto& iComponent : components)
-    {
+    for (auto& iComponent : components) {
         iComponent->Render();
     }
 }

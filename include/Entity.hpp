@@ -43,10 +43,8 @@ void Entity::AddComponent(Args&&... parameters)
 template <class ComponentType>
 ComponentType& Entity::GetComponent()
 {
-    for (auto&& iComponent : components)
-    {
-        if (iComponent->IsClassType(ComponentType::Type))
-        {
+    for (auto&& iComponent : components) {
+        if (iComponent->IsClassType(ComponentType::Type)) {
             return *static_cast<ComponentType*>(iComponent.get());
         }
     }
@@ -57,8 +55,7 @@ ComponentType& Entity::GetComponent()
 template <class ComponentType>
 bool Entity::RemoveComponent()
 {
-    if (components.empty())
-    {
+    if (components.empty()) {
         return false;
     }
 
@@ -67,8 +64,7 @@ bool Entity::RemoveComponent()
 
     bool success = index != components.end();
 
-    if (success)
-    {
+    if (success) {
         components.erase(index);
     }
 

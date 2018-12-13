@@ -68,16 +68,13 @@ int ResourceManager::GetVertexArrayObject(const std::string& pName)
 
 void ResourceManager::Clear()
 {
-    for (auto iShader : Shaders)
-    {
+    for (auto iShader : Shaders) {
         glDeleteProgram(iShader.second->ID);
     }
-    for (auto iTexture2D : Textures)
-    {
+    for (auto iTexture2D : Textures) {
         glDeleteTextures(1, &iTexture2D.second->ID);
     }
-    for (auto iVertexArrayObject : VertexArrayObjects)
-    {
+    for (auto iVertexArrayObject : VertexArrayObjects) {
         glDeleteVertexArrays(1, &iVertexArrayObject.second);
     }
 
@@ -94,18 +91,14 @@ Texture2DPtr ResourceManager::LoadTexture2DFromFile(const std::string& pFile)
 
     Texture2DPtr texture = std::make_shared<Texture2D>();
 
-    if (imageData)
-    {
-        if (channels == 4)
-        {
+    if (imageData) {
+        if (channels == 4) {
             texture->SetInternalFormat(GL_RGBA);
             texture->SetImageFormat(GL_RGBA);
         }
 
         texture->Generate(width, height, imageData);
-    }
-    else
-    {
+    } else {
         std::cout << "ERROR::ResourceManager: Failed to load image file: " << pFile << std::endl;
     }
 
@@ -117,8 +110,7 @@ std::string ResourceManager::LoadTextFile(const std::string& pFile)
 {
     std::string content;
 
-    try
-    {
+    try {
         std::ifstream file(pFile);
         std::stringstream fileStream;
 
@@ -126,9 +118,7 @@ std::string ResourceManager::LoadTextFile(const std::string& pFile)
         file.close();
 
         content = fileStream.str();
-    }
-    catch (std::exception e)
-    {
+    } catch (std::exception e) {
         std::cout << "ERROR::ResourceManager: Failed to load text file: " << pFile << std::endl;
     }
 

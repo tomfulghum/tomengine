@@ -46,12 +46,9 @@ void GridSprites::Load()
 
 SpritePtr GridSprites::GetSprite(NodeState pState)
 {
-    if (initialized)
-    {
+    if (initialized) {
         return sprites[pState];
-    }
-    else
-    {
+    } else {
         return nullptr;
     }
 }

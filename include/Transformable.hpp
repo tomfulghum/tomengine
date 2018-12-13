@@ -7,8 +7,7 @@
 namespace tomengine
 {
 
-struct Transform
-{
+struct Transform {
     glm::vec3 scale;
     glm::vec3 baseScale;
     glm::vec3 pivot;

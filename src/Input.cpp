@@ -28,14 +28,10 @@ glm::vec2 Input::GetCursorPosition()
 
 void Input::UpdateButtonStates()
 {
-    for (ButtonAction& action : mouseButtonStates)
-    {
-        if (action == BUTTON_DOWN)
-        {
+    for (ButtonAction& action : mouseButtonStates) {
+        if (action == BUTTON_DOWN) {
             action = BUTTON_PRESSED;
-        }
-        else if (action == BUTTON_UP)
-        {
+        } else if (action == BUTTON_UP) {
             action = BUTTON_NONE;
         }
     }
@@ -43,8 +39,7 @@ void Input::UpdateButtonStates()
 
 MouseButton Input::GetMouseButtonFromGlfw(const int pGlfwButton)
 {
-    switch (pGlfwButton)
-    {
+    switch (pGlfwButton) {
         case (GLFW_MOUSE_BUTTON_1): return MOUSE_0;
         case (GLFW_MOUSE_BUTTON_2): return MOUSE_1;
         case (GLFW_MOUSE_BUTTON_3): return MOUSE_2;

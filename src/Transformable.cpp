@@ -14,8 +14,7 @@ Transformable::Transformable()
 
 glm::mat4 Transformable::GetTransformMatrix()
 {
-    if (changed)
-    {
+    if (changed) {
         CalculateTransformMatrix();
         changed = false;
     }

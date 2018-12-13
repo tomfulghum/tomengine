@@ -33,8 +33,7 @@ void Environment::SetApplication(ApplicationPtr pApp)
 
 void Environment::SetWindowDimensions(int pWidth, int pHeight)
 {
-    if (window)
-    {
+    if (window) {
         glfwSetWindowSize(window, pWidth, pHeight);
     }
 }
@@ -54,8 +53,7 @@ int Environment::Initialize()
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
     window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
-    if (window == NULL)
-    {
+    if (window == NULL) {
         std::cout << "ERROR::Environment: Failed to create GLFW window." << std::endl;
         glfwTerminate();
         return -1;
@@ -63,16 +61,14 @@ int Environment::Initialize()
 
     glfwMakeContextCurrent(window);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "ERROR::Environment: Failed to initialize GLAD." << std::endl;
         return -1;
     }
 
     GLint flags;
     glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-    if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
-    {
+    if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
         glEnable(GL_DEBUG_OUTPUT);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         glDebugMessageCallback(GlDebugCallback, nullptr);
@@ -90,8 +86,7 @@ int Environment::Initialize()
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
     glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
-    if (app)
-    {
+    if (app) {
         app->Initialize();
     }
 
@@ -100,8 +95,7 @@ int Environment::Initialize()
 
 void Environment::Run()
 {
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         Time::runTime = glfwGetTime();
         Time::deltaTime = Time::runTime - lastFrameTime;
         lastFrameTime = Time::runTime;
@@ -112,8 +106,7 @@ void Environment::Run()
         Input::UpdateButtonStates();
         glfwPollEvents();
 
-        if (app)
-        {
+        if (app) {
             app->Update();
             app->Render();
         }
@@ -126,8 +119,7 @@ void Environment::Run()
 
 void Environment::Terminate()
 {
-    if (app)
-    {
+    if (app) {
         app->Terminate();
     }
     glfwTerminate();
@@ -135,26 +127,21 @@ void Environment::Terminate()
 
 void Environment::SetKey(int pKey, bool pPressed)
 {
-    if (pKey >= 0 && pKey < 1024)
-    {
+    if (pKey >= 0 && pKey < 1024) {
         Keys[pKey] = pPressed;
     }
 }
 
 void Environment::KeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods)
 {
-    if (pKey == GLFW_KEY_ESCAPE && pAction == GLFW_PRESS)
-    {
+    if (pKey == GLFW_KEY_ESCAPE && pAction == GLFW_PRESS) {
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
     }
 
-    if (pAction == GLFW_PRESS)
-    {
+    if (pAction == GLFW_PRESS) {
         SetKey(pKey, true);
         std::cout << pKey << std::endl;
-    }
-    else if (pAction == GLFW_RELEASE)
-    {
+    } else if (pAction == GLFW_RELEASE) {
         SetKey(pKey, false);
     }
 }
@@ -167,8 +154,7 @@ void Environment::CursorPositionCallback(GLFWwindow* pWindow, double pPosX, doub
 
 void Environment::MouseButtonCallback(GLFWwindow* pWindow, int pButton, int pAction, int pMods)
 {
-    switch (pAction)
-    {
+    switch (pAction) {
         case (GLFW_PRESS):
             Input::mouseButtonStates[Input::GetMouseButtonFromGlfw(pButton)] = BUTTON_DOWN;
             break;
@@ -197,8 +183,7 @@ void APIENTRY Environment::GlDebugCallback(GLenum source, GLenum type, GLuint id
     std::cout << "Debug message (" << id << "): " << message << std::endl;
 
     std::cout << "Source: ";
-    switch (source)
-    {
+    switch (source) {
         case GL_DEBUG_SOURCE_API: std::cout << "API"; break;
         case GL_DEBUG_SOURCE_WINDOW_SYSTEM: std::cout << "Window System"; break;
         case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Shader Compiler"; break;
@@ -209,8 +194,7 @@ void APIENTRY Environment::GlDebugCallback(GLenum source, GLenum type, GLuint id
     std::cout << std::endl;
 
     std::cout << "Type: ";
-    switch (type)
-    {
+    switch (type) {
         case GL_DEBUG_TYPE_ERROR: std::cout << "Error"; break;
         case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Deprecated Behaviour"; break;
         case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: std::cout << "Undefined Behaviour"; break;
@@ -224,8 +208,7 @@ void APIENTRY Environment::GlDebugCallback(GLenum source, GLenum type, GLuint id
     std::cout << std::endl;
 
     std::cout << "Severity: ";
-    switch (severity)
-    {
+    switch (severity) {
         case GL_DEBUG_SEVERITY_HIGH: std::cout << "High"; break;
         case GL_DEBUG_SEVERITY_MEDIUM: std::cout << "Medium"; break;
         case GL_DEBUG_SEVERITY_LOW: std::cout << "Low"; break;

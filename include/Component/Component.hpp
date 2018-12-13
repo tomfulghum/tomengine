@@ -23,8 +23,7 @@ public:                                      \
     const std::size_t child::Type = std::hash<std::string>()(TO_STRING(child)); \
     bool child::IsClassType(const std::size_t classType) const                  \
     {                                                                           \
-        if (classType == child::Type)                                           \
-        {                                                                       \
+        if (classType == child::Type) {                                         \
             return true;                                                        \
         }                                                                       \
         return parent::IsClassType(classType);                                  \
