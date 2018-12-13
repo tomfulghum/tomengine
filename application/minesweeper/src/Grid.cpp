@@ -8,7 +8,11 @@
 using namespace tomengine;
 
 Grid::Grid(const int pWidth, const int pHeight) :
-    width(pWidth), height(pHeight), matrix(pWidth, pHeight)
+    Behavior(), width(pWidth), height(pHeight), matrix(pWidth, pHeight)
+{
+}
+
+Grid::~Grid()
 {
 }
 
@@ -40,6 +44,10 @@ void Grid::Visualize()
         }
         std::cout << std::endl;
     }
+}
+
+void Grid::Render()
+{
 }
 
 GridNode Grid::GetNode(const int pI, const int pJ)

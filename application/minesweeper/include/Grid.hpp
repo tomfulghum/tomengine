@@ -3,20 +3,23 @@
 
 #include <vector>
 
+#include "Component/Behavior.hpp"
 #include "Utility/Matrix.hpp"
 #include "GridNode.hpp"
 
 class Grid;
 typedef std::shared_ptr<Grid> GridPtr;
-typedef std::weak_ptr<Grid> GridPtrW;
+typedef std::weak_ptr<Grid> GridWPtr;
 
-class Grid
+class Grid : public tomengine::Behavior
 {
 public:
     Grid(const int width, const int height);
+    ~Grid();
 
     void Generate(const int mines);
     void Visualize();
+    void Render();
     GridNode GetNode(const int i, const int j);
     void GetNodeAtScreenCoords(const int x, const int y);
 

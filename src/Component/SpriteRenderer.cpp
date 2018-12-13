@@ -195,9 +195,9 @@ void SpriteRenderer::InitTexture()
     if (ent && this->sprite)
     {
         Texture2DPtr texture = this->sprite->GetTexture();
-        ent->SetScale(texture->GetWidth(), texture->GetHeight());
-        texture->SetFilterMin(GL_NEAREST);
-        texture->SetFilterMag(GL_NEAREST);
+        ent->SetBaseScale(texture->GetWidth(), texture->GetHeight());
+        texture->SetFilterMin(GL_NEAREST_MIPMAP_LINEAR);
+        texture->SetFilterMag(GL_NEAREST_MIPMAP_LINEAR);
 
         this->initialized = true;
     }

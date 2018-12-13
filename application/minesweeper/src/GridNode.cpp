@@ -16,8 +16,3 @@ void GridNode::SetMine(bool pMine)
 {
     this->mine = pMine;
 }
-
-void GridNode::SetSprite(SpritePtr pSprite)
-{
-    this->sprite = pSprite;
-}

@@ -1,12 +1,17 @@
-#include "GridRenderer.hpp"
+#include "GridSprites.hpp"
 
+#include <vector>
+
+#include "Common.hpp"
 #include "ResourceManager.hpp"
+#include "Texture2D.hpp"
 
 using namespace tomengine;
 
-/*
-GridRenderer::GridRenderer(SpriteRendererPtr pSpriteRenderer) :
-    spriteRenderer(pSpriteRenderer)
+std::vector<SpritePtr> GridSprites::sprites;
+bool GridSprites::initialized = false;
+
+void GridSprites::Load()
 {
     Texture2DPtr texNode = ResourceManager::LoadTexture2D("data/sprite/node.png", "sprite_node");
     Texture2DPtr texNodeFlagged = ResourceManager::LoadTexture2D("data/sprite/node_flagged.png", "Sprite_node_flagged");
@@ -22,23 +27,36 @@ GridRenderer::GridRenderer(SpriteRendererPtr pSpriteRenderer) :
     Texture2DPtr texNodeOpenMineClicked = ResourceManager::LoadTexture2D("data/sprite/node_open_mine_clicked.png", "Sprite_node_open_mine_clicked");
     Texture2DPtr texNodeOpenMine = ResourceManager::LoadTexture2D("data/sprite/node_open_mine.png", "Sprite_node_open_mine");
 
-    sprites.push_back(std::make_shared<SpriteEntity>(texNode));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeFlagged));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen1));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen2));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen3));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen4));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen5));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen6));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen7));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpen8));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpenBlank));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpenMineClicked));
-    sprites.push_back(std::make_shared<SpriteEntity>(texNodeOpenMine));
+    sprites.push_back(std::make_shared<Sprite>(texNode));
+    sprites.push_back(std::make_shared<Sprite>(texNodeFlagged));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen1));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen2));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen3));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen4));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen5));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen6));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen7));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpen8));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpenBlank));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpenMineClicked));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpenMine));
+
+    initialized = true;
 }
 
-void GridRenderer::Render(GridPtr pGrid)
+SpritePtr GridSprites::GetSprite(NodeState pState)
 {
-    spriteRenderer->DrawSprite(sprites[pGrid->GetNode(0, 0).GetState()]);
+    if (initialized)
+    {
+        return sprites[pState];
+    }
+    else
+    {
+        return nullptr;
+    }
 }
-*/
+
+bool GridSprites::IsInitialized()
+{
+    return initialized;
+}

@@ -20,6 +20,10 @@ enum NodeState
     OPEN_MINE_CLICKED
 };
 
+class GridNode;
+typedef std::shared_ptr<GridNode> GridNodePtr;
+typedef std::weak_ptr<GridNode> GridNodeWPtr;
+
 class GridNode
 {
 public:
@@ -27,14 +31,11 @@ public:
 
     NodeState GetState() const { return this->state; }
     bool IsMine() const { return this->mine; }
-    tomengine::SpritePtr GetSprite() const { return this->sprite; }
 
     void SetState(NodeState state);
     void SetMine(bool mine);
-    void SetSprite(tomengine::SpritePtr sprite);
 
 private:
-    tomengine::SpritePtr sprite;
     NodeState state;
     bool mine;
 };

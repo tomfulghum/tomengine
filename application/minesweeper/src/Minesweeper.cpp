@@ -16,7 +16,6 @@
 #include "Transformable.hpp"
 
 #include "Grid.hpp"
-#include "GridRenderer.hpp"
 
 using namespace tomengine;
 
@@ -31,10 +30,7 @@ Minesweeper::~Minesweeper()
 
 Texture2DPtr texMegumin;
 EntityPtr entMegumin;
-//SpriteEntityPtr entMegumin;
-//SpriteRendererPtr spriteRenderer;
-//GridPtr grid;
-//GridRenderer* gridRenderer;
+
 float rot = 0.0f;
 float scale = 0.0f;
 
@@ -45,19 +41,11 @@ void Minesweeper::Initialize()
     Environment::SetWindowDimensions(1280, 960);
 
     entMegumin = std::make_shared<Entity>();
-    texMegumin = ResourceManager::LoadTexture2D("data/sprite/megumin.png", "Sprite_Megumin");
+    texMegumin = ResourceManager::LoadTexture2D("data/sprite/brigitte.png", "Sprite_Megumin");
     SpritePtr spriteMegumin = std::make_shared<Sprite>(texMegumin);
     entMegumin->AddComponent<SpriteRenderer>(spriteMegumin);
     entMegumin->GetComponent<SpriteRenderer>().SetAnchorPosition(ANCHOR_MIDDLE);
-    entMegumin->SetScale(texMegumin->GetWidth() * 0.5f, texMegumin->GetHeight() * 0.5f);
-
-    /*
-    grid = std::make_shared<Grid>(16, 16);
-    grid->Generate(40);
-    grid->Visualize();
-
-    gridRenderer = new GridRenderer(spriteRenderer);
-    */
+    entMegumin->SetScale(0.0f, 0.0f);
 }
 
 void Minesweeper::Update()
@@ -66,14 +54,12 @@ void Minesweeper::Update()
     float yPos = Environment::WindowHeight() / 2.0f + (200.0f * -std::cos(Time::RunTime()));
     entMegumin->SetPosition(xPos, yPos);
     entMegumin->SetRotation(rot += 100.0f * Time::DeltaTime());
-    //entMegumin->SetScale(glm::vec3(texMegumin->GetWidth(), texMegumin->GetHeight(), 0.0f) * (scale += 0.1f * Time::DeltaTime()));
+    entMegumin->SetScale(scale += 0.1f * Time::DeltaTime(), scale);
 }
 
 void Minesweeper::Render()
 {
     entMegumin->Render();
-    //gridRenderer->Render(grid);
-    //std::cout << "Render Minesweeper!" << std::endl;
 }
 
 void Minesweeper::Terminate()

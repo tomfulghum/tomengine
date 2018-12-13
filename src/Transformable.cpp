@@ -5,6 +5,7 @@ using namespace tomengine;
 Transformable::Transformable()
 {
     transform.scale = glm::vec3(1.0f);
+    transform.baseScale = glm::vec3(1.0f);
     transform.pivot = glm::vec3(0.0f);
     transform.rotation = 0.0f;
     transform.position = glm::vec3(0.0f);
@@ -36,6 +37,23 @@ void Transformable::SetScale(const float pX, const float pY, const float pZ)
 void Transformable::SetScale(const float pX, const float pY)
 {
     this->SetScale(glm::vec3(pX, pY, 1.0f));
+    this->changed = true;
+}
+void Transformable::SetBaseScale(const glm::vec3& pScale)
+{
+    this->transform.baseScale = pScale;
+    this->changed = true;
+}
+
+void Transformable::SetBaseScale(const float pX, const float pY, const float pZ)
+{
+    this->SetBaseScale(glm::vec3(pX, pY, pZ));
+    this->changed = true;
+}
+
+void Transformable::SetBaseScale(const float pX, const float pY)
+{
+    this->SetBaseScale(glm::vec3(pX, pY, 1.0f));
     this->changed = true;
 }
 
@@ -89,7 +107,8 @@ void Transformable::SetPosition(const float pX, const float pY)
 
 void Transformable::CalculateTransformMatrix()
 {
-    glm::vec3 pivot = this->transform.pivot * this->transform.scale;
+    glm::vec3 scale = this->transform.scale * this->transform.baseScale;
+    glm::vec3 pivot = this->transform.pivot * scale;
     glm::mat4 trans = glm::mat4(1.0f);
 
     // Translation
@@ -101,7 +120,7 @@ void Transformable::CalculateTransformMatrix()
     trans = glm::translate(trans, glm::vec3(-pivot.x, -pivot.y, 0.0f));
 
     // Scale
-    trans = glm::scale(trans, transform.scale);
+    trans = glm::scale(trans, scale);
 
     //trans = glm::translate(trans, glm::vec3(this->transform.pivot.x, this->transform.pivot.y, 0.0f));
 
