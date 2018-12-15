@@ -41,6 +41,7 @@ void Environment::SetWindowDimensions(int pWidth, int pHeight)
 void Environment::SetWindowTitle(const std::string& pTitle)
 {
     windowTitle = pTitle;
+    glfwSetWindowTitle(window, windowTitle.c_str());
 }
 
 int Environment::Initialize()

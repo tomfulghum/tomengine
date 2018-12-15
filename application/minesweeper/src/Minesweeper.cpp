@@ -30,13 +30,13 @@ Minesweeper::~Minesweeper()
 {
 }
 
-const int GRID_WIDTH = 16;
-const int GRID_HEIGHT = 16;
+const int GRID_WIDTH = 100;
+const int GRID_HEIGHT = 50;
 const int SPRITE_SIZE = 16;
-const int MINE_COUNT = 40;
+const int MINE_COUNT = 500;
 
-Texture2DPtr texMegumin;
-EntityPtr entMegumin;
+//Texture2DPtr texMegumin;
+//EntityPtr entMegumin;
 GridPtr grid;
 
 float rot = 0.0f;
@@ -46,7 +46,7 @@ void Minesweeper::Initialize()
 {
     std::cout << "Initialize Minesweeper!" << std::endl;
     Environment::SetWindowTitle("Minesweeper");
-    Environment::SetWindowDimensions(GRID_WIDTH * SPRITE_SIZE, GRID_WIDTH * SPRITE_SIZE);
+    Environment::SetWindowDimensions(GRID_WIDTH * SPRITE_SIZE, GRID_HEIGHT * SPRITE_SIZE);
 
     GridSprites::Load();
 

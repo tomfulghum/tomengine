@@ -29,7 +29,7 @@ public:
     void AddComponent(Args&&... parameters);
 
     template <class ComponentType>
-    ComponentType& GetComponent();
+    ComponentType* GetComponent();
 
     template <class ComponentType>
     bool RemoveComponent();
@@ -50,15 +50,15 @@ void Entity::AddComponent(Args&&... parameters)
 }
 
 template <class ComponentType>
-ComponentType& Entity::GetComponent()
+ComponentType* Entity::GetComponent()
 {
     for (auto&& iComponent : components) {
         if (iComponent->IsClassType(ComponentType::Type)) {
-            return *static_cast<ComponentType*>(iComponent.get());
+            return static_cast<ComponentType*>(iComponent.get());
         }
     }
 
-    return *std::unique_ptr<ComponentType>(nullptr);
+    return nullptr;
 }
 
 template <class ComponentType>

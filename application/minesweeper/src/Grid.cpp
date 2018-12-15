@@ -24,14 +24,15 @@ Grid::~Grid()
 
 void Grid::Generate(const int pMines)
 {
+    // Initialize nodes
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->height; j++) {
             EntityPtr node = EntityManager::CreateEntity();
             node->AddComponent<SpriteRenderer>();
-            node->AddComponent<GridNode>(i, j, nodeSize);
+            node->AddComponent<GridNode>(this, i, j, nodeSize);
 
             node->SetPosition(i * nodeSize, j * nodeSize);
-            node->GetComponent<SpriteRenderer>().SetSprite(GridSprites::GetSprite(BLANK));
+            node->GetComponent<SpriteRenderer>()->SetSprite(GridSprites::GetSprite(BLANK));
 
             this->matrix.Set(i, j, node);
         }
@@ -39,9 +40,27 @@ void Grid::Generate(const int pMines)
 
     std::vector<int> mineCoords = GetRandomSequence(0, this->width * this->height, pMines);
 
+    // Randomly set mines
     for (int i = 0; i < pMines; i++) {
-        matrix.Get(mineCoords.back())->GetComponent<GridNode>().SetMine(true);
+        matrix.Get(mineCoords.back())->GetComponent<GridNode>()->mine = true;
+        this->mines.push_back(matrix.Get(mineCoords.back()));
         mineCoords.pop_back();
+    }
+
+    // Set number of neighboring mines for each node
+    for (int i = 0; i < this->width; i++) {
+        for (int j = 0; j < this->height; j++) {
+            int mines = 0;
+
+            auto neighbors = GetNeighbors(i, j);
+            for (auto& neighbor : neighbors) {
+                if (neighbor->GetComponent<GridNode>()->mine) {
+                    mines++;
+                }
+            }
+
+            matrix.Get(i, j)->GetComponent<GridNode>()->nearbyMines = mines;
+        }
     }
 }
 
@@ -49,7 +68,7 @@ void Grid::Visualize()
 {
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->height; j++) {
-            if (matrix.Get(i, j)->GetComponent<GridNode>().IsMine()) {
+            if (matrix.Get(i, j)->GetComponent<GridNode>()->mine) {
                 std::cout << "X";
             } else {
                 std::cout << "*";
@@ -64,8 +83,31 @@ EntityPtr Grid::GetNode(const int pI, const int pJ)
     return matrix.Get(pI, pJ);
 }
 
-EntityPtr GetNodeAtScreenCoords(const int x, const int y)
+std::vector<EntityPtr> Grid::GetNeighbors(const int pI, const int pJ)
 {
+    std::vector<EntityPtr> neighbors;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            int x = pI + i;
+            int y = pJ + j;
+
+            // Check matrix boundaries
+            if (x >= 0 && x < this->width && y >= 0 && y < this->height) {
+                // Exclude middle
+                if (!(x == pI && y == pJ)) {
+                    neighbors.push_back(matrix.Get(x, y));
+                }
+            }
+        }
+    }
+
+    return neighbors;
+}
+
+std::vector<EntityPtr> Grid::GetMines()
+{
+    return this->mines;
 }
 
 std::vector<int> Grid::GetRandomSequence(int pFrom, int pTo, int pCount)

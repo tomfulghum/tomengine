@@ -25,8 +25,8 @@ void GridSprites::Load()
     Texture2DPtr texNodeOpen7 = ResourceManager::LoadTexture2D("data/sprite/node_open_7.png", "Sprite_node_open_7");
     Texture2DPtr texNodeOpen8 = ResourceManager::LoadTexture2D("data/sprite/node_open_8.png", "Sprite_node_open_8");
     Texture2DPtr texNodeOpenBlank = ResourceManager::LoadTexture2D("data/sprite/node_open_blank.png", "Sprite_node_open_blank");
-    Texture2DPtr texNodeOpenMineClicked = ResourceManager::LoadTexture2D("data/sprite/node_open_mine_clicked.png", "Sprite_node_open_mine_clicked");
     Texture2DPtr texNodeOpenMine = ResourceManager::LoadTexture2D("data/sprite/node_open_mine.png", "Sprite_node_open_mine");
+    Texture2DPtr texNodeOpenMineClicked = ResourceManager::LoadTexture2D("data/sprite/node_open_mine_clicked.png", "Sprite_node_open_mine_clicked");
 
     sprites.push_back(std::make_shared<Sprite>(texNode));
     sprites.push_back(std::make_shared<Sprite>(texNodeFlagged));
@@ -39,16 +39,16 @@ void GridSprites::Load()
     sprites.push_back(std::make_shared<Sprite>(texNodeOpen7));
     sprites.push_back(std::make_shared<Sprite>(texNodeOpen8));
     sprites.push_back(std::make_shared<Sprite>(texNodeOpenBlank));
-    sprites.push_back(std::make_shared<Sprite>(texNodeOpenMineClicked));
     sprites.push_back(std::make_shared<Sprite>(texNodeOpenMine));
+    sprites.push_back(std::make_shared<Sprite>(texNodeOpenMineClicked));
 
     initialized = true;
 }
 
-SpritePtr GridSprites::GetSprite(NodeState pState)
+SpritePtr GridSprites::GetSprite(NodeSprite pSprite)
 {
     if (initialized) {
-        return sprites[pState];
+        return sprites[pSprite];
     } else {
         return nullptr;
     }

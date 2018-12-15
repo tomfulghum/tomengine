@@ -35,7 +35,7 @@ Matrix<T>::Matrix(const unsigned int pColumns, const unsigned int pRows) :
 template <class T>
 T& Matrix<T>::Get(const unsigned int pX, const unsigned int pY)
 {
-    return elements[pX + (pY * this->rows)];
+    return elements[pX + (pY * this->columns)];
 }
 
 template <class T>
@@ -47,7 +47,7 @@ T& Matrix<T>::Get(const unsigned int pI)
 template <class T>
 void Matrix<T>::Set(const unsigned int pX, const unsigned int pY, T& pRef)
 {
-    elements[pX + (pY * this->rows)] = pRef;
+    elements[pX + (pY * this->columns)] = pRef;
 }
 
 template <class T>
