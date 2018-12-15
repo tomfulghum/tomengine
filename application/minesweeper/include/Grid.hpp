@@ -4,13 +4,14 @@
 #include <vector>
 
 #include "Common.hpp"
+#include "Transformable.hpp"
 #include "Utility/Matrix.hpp"
 
 class Grid;
 typedef std::shared_ptr<Grid> GridPtr;
 typedef std::weak_ptr<Grid> GridWPtr;
 
-class Grid
+class Grid : public tomengine::Transformable
 {
 public:
     Grid(const int width, const int height, const int nodeSize);

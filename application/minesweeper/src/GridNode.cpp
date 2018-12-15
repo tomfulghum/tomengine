@@ -25,11 +25,10 @@ void GridNode::Update()
 {
     glm::vec2 cursorPos = Input::GetCursorPosition();
     bool mouseover = false;
-    int pixelPosX = this->posX * this->size;
-    int pixelPosY = this->posY * this->size;
+    glm::vec3 pixelPos = this->entity.lock()->GetPosition();
 
-    if (cursorPos.x >= pixelPosX && cursorPos.x < pixelPosX + this->size) {
-        if (cursorPos.y >= pixelPosY && cursorPos.y < pixelPosY + this->size) {
+    if (cursorPos.x >= pixelPos.x && cursorPos.x < pixelPos.x + this->size) {
+        if (cursorPos.y >= pixelPos.y && cursorPos.y < pixelPos.y + this->size) {
             if (Input::GetMouseButtonDown(MOUSE_0)) {
                 std::cout << this->posX << " " << this->posY << " Mines: " << this->nearbyMines << std::endl;
 

@@ -1,6 +1,8 @@
 #ifndef TOMENGINE_TRANSFORMABLE_HPP
 #define TOMENGINE_TRANSFORMABLE_HPP
 
+#include <list>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
@@ -20,11 +22,18 @@ class Transformable
 public:
     Transformable();
 
-    const Transform& GetTransform() const { return this->transform; }
-    glm::vec3 GetScale() const { return this->transform.scale; }
-    glm::vec3 GetPivot() const { return this->transform.pivot; }
-    float GetRotation() const { return this->transform.rotation; }
-    glm::vec3 GetPosition() const { return this->transform.position; }
+    void SetParent(Transformable* parent);
+    Transformable* GetParent() const { return this->parent; }
+
+    const Transform& GetTransform() const { return this->global; }
+    const Transform& GetLocalTransform() const { return this->local; }
+    glm::vec3 GetScale() const { return this->global.scale; }
+    glm::vec3 GetLocalScale() const { return this->local.scale; }
+    glm::vec3 GetPivot() const { return this->local.pivot; }
+    float GetRotation() const { return this->global.rotation; }
+    float GetLocalRotation() const { return this->local.rotation; }
+    glm::vec3 GetPosition() const { return this->global.position; }
+    glm::vec3 GetLocalPosition() const { return this->local.position; }
     glm::mat4 GetTransformMatrix();
 
     void SetScale(const glm::vec3& scale);
@@ -43,11 +52,17 @@ public:
     void SetPosition(const float x, const float y);
 
 protected:
-    Transform transform;
+    Transformable* parent;
+    std::list<Transformable*> children;
+    Transform local;
+    Transform global;
     glm::mat4 transformMatrix;
     bool changed;
 
+private:
     void CalculateTransformMatrix();
+    void SetChanged();
+    void UpdateGlobal();
 };
 
 } // namespace tomengine

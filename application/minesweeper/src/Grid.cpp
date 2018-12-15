@@ -30,6 +30,7 @@ void Grid::Generate(const int pMines)
             EntityPtr node = EntityManager::CreateEntity();
             node->AddComponent<SpriteRenderer>();
             node->AddComponent<GridNode>(this, i, j, nodeSize);
+            node->SetParent(this);
 
             node->SetPosition(i * nodeSize, j * nodeSize);
             node->GetComponent<SpriteRenderer>()->SetSprite(GridSprites::GetSprite(BLANK));

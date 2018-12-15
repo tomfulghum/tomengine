@@ -30,10 +30,10 @@ Minesweeper::~Minesweeper()
 {
 }
 
-const int GRID_WIDTH = 100;
-const int GRID_HEIGHT = 50;
+const int GRID_WIDTH = 110;
+const int GRID_HEIGHT = 60;
 const int SPRITE_SIZE = 16;
-const int MINE_COUNT = 500;
+const int MINE_COUNT = 250;
 
 //Texture2DPtr texMegumin;
 //EntityPtr entMegumin;
@@ -58,6 +58,8 @@ void Minesweeper::Initialize()
     //entMegumin->SetScale(0.0f, 0.0f);
 
     grid = std::make_shared<Grid>(GRID_WIDTH, GRID_HEIGHT, SPRITE_SIZE);
+    grid->SetPosition(GRID_WIDTH * SPRITE_SIZE / 2, GRID_HEIGHT * SPRITE_SIZE / 2);
+    grid->SetPivot(GRID_WIDTH * SPRITE_SIZE / 2, GRID_HEIGHT * SPRITE_SIZE / 2);
     grid->Generate(MINE_COUNT);
 
     EntityManager::InitEntities();
@@ -68,7 +70,7 @@ void Minesweeper::Update()
     //float xPos = Environment::WindowWidth() / 2.0f + (200.0f * std::sin(Time::RunTime()));
     //float yPos = Environment::WindowHeight() / 2.0f + (200.0f * -std::cos(Time::RunTime()));
     //entMegumin->SetPosition(xPos, yPos);
-    //entMegumin->SetRotation(rot += 100.0f * Time::DeltaTime());
+    grid->SetRotation(rot += 100.0f * Time::DeltaTime());
     //entMegumin->SetScale(scale += 0.1f * Time::DeltaTime(), scale);
 
     EntityManager::UpdateEntities();
