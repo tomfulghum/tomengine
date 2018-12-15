@@ -3,30 +3,30 @@
 
 #include <vector>
 
-#include "Component/Behavior.hpp"
+#include "Common.hpp"
 #include "Utility/Matrix.hpp"
-#include "GridNode.hpp"
 
 class Grid;
 typedef std::shared_ptr<Grid> GridPtr;
 typedef std::weak_ptr<Grid> GridWPtr;
 
-class Grid : public tomengine::Behavior
+class Grid
 {
 public:
-    Grid(const int width, const int height);
+    Grid(const int width, const int height, const int nodeSize);
     ~Grid();
+
+    tomengine::EntityPtr GetNode(const int i, const int j);
+    tomengine::EntityPtr GetNodeAtScreenCoords(const int x, const int y);
 
     void Generate(const int mines);
     void Visualize();
-    void Render();
-    GridNode GetNode(const int i, const int j);
-    void GetNodeAtScreenCoords(const int x, const int y);
 
 private:
-    tomengine::Matrix<GridNode> matrix;
-    int width;
-    int height;
+    tomengine::Matrix<tomengine::EntityPtr> matrix;
+    const int width;
+    const int height;
+    const int nodeSize;
 
     std::vector<int> GetRandomSequence(int from, int to, int count);
 };

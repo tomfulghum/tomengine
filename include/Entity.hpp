@@ -13,10 +13,15 @@ namespace tomengine
 
 class Entity : public Transformable, public std::enable_shared_from_this<Entity>
 {
+    friend class EntityManager;
+
 public:
-    Entity() {}
     virtual ~Entity();
 
+    bool IsActive() { return this->active; }
+    void SetActive(bool active);
+
+    virtual void Init();
     virtual void Update();
     virtual void Render();
 
@@ -29,8 +34,12 @@ public:
     template <class ComponentType>
     bool RemoveComponent();
 
+protected:
+    Entity();
+
 private:
     std::vector<ComponentUPtr> components;
+    bool active;
 };
 
 template <class ComponentType, typename... Args>

@@ -5,10 +5,16 @@
 #include <iostream>
 #include <random>
 
+#include "Entity.hpp"
+#include "EntityManager.hpp"
+
+#include "GridNode.hpp"
+#include "GridSprites.hpp"
+
 using namespace tomengine;
 
-Grid::Grid(const int pWidth, const int pHeight) :
-    Behavior(), width(pWidth), height(pHeight), matrix(pWidth, pHeight)
+Grid::Grid(const int pWidth, const int pHeight, const int pNodeSize) :
+    width(pWidth), height(pHeight), nodeSize(pNodeSize), matrix(pWidth, pHeight)
 {
 }
 
@@ -18,10 +24,23 @@ Grid::~Grid()
 
 void Grid::Generate(const int pMines)
 {
+    for (int i = 0; i < this->width; i++) {
+        for (int j = 0; j < this->height; j++) {
+            EntityPtr node = EntityManager::CreateEntity();
+            node->AddComponent<SpriteRenderer>();
+            node->AddComponent<GridNode>(i, j, nodeSize);
+
+            node->SetPosition(i * nodeSize, j * nodeSize);
+            node->GetComponent<SpriteRenderer>().SetSprite(GridSprites::GetSprite(BLANK));
+
+            this->matrix.Set(i, j, node);
+        }
+    }
+
     std::vector<int> mineCoords = GetRandomSequence(0, this->width * this->height, pMines);
 
     for (int i = 0; i < pMines; i++) {
-        matrix.Get(mineCoords.back()).SetMine(true);
+        matrix.Get(mineCoords.back())->GetComponent<GridNode>().SetMine(true);
         mineCoords.pop_back();
     }
 }
@@ -30,7 +49,7 @@ void Grid::Visualize()
 {
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->height; j++) {
-            if (matrix.Get(i, j).IsMine()) {
+            if (matrix.Get(i, j)->GetComponent<GridNode>().IsMine()) {
                 std::cout << "X";
             } else {
                 std::cout << "*";
@@ -40,13 +59,13 @@ void Grid::Visualize()
     }
 }
 
-void Grid::Render()
-{
-}
-
-GridNode Grid::GetNode(const int pI, const int pJ)
+EntityPtr Grid::GetNode(const int pI, const int pJ)
 {
     return matrix.Get(pI, pJ);
+}
+
+EntityPtr GetNodeAtScreenCoords(const int x, const int y)
+{
 }
 
 std::vector<int> Grid::GetRandomSequence(int pFrom, int pTo, int pCount)

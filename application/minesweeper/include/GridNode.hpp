@@ -1,10 +1,11 @@
 #ifndef MINESWEEPER_GRIDNODE_HPP
 #define MINESWEEPER_GRIDNODE_HPP
 
-#include "Sprite.hpp"
+#include "Component/Component.hpp"
+#include "Component/Behavior.hpp"
+#include "Component/SpriteRenderer.hpp"
 
-enum NodeState
-{
+enum NodeState {
     BLANK,
     FLAGGED,
     OPEN_1,
@@ -20,14 +21,12 @@ enum NodeState
     OPEN_MINE_CLICKED
 };
 
-class GridNode;
-typedef std::shared_ptr<GridNode> GridNodePtr;
-typedef std::weak_ptr<GridNode> GridNodeWPtr;
-
-class GridNode
+class GridNode : public tomengine::Behavior
 {
+    COMPONENT_DECLARATION(GridNode);
+
 public:
-    GridNode();
+    GridNode(const int posX, const int posY, const int size);
 
     NodeState GetState() const { return this->state; }
     bool IsMine() const { return this->mine; }
@@ -35,9 +34,16 @@ public:
     void SetState(NodeState state);
     void SetMine(bool mine);
 
+    void Start() override;
+    void Update() override;
+
 private:
+    const int posX;
+    const int posY;
+    const int size;
     NodeState state;
     bool mine;
+    tomengine::SpriteRenderer spriteRenderer;
 };
 
 #endif

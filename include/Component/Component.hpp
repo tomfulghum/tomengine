@@ -37,7 +37,7 @@ class Component
     friend class Entity;
 
 public:
-    Component() {}
+    Component();
     virtual ~Component() = default;
 
     static const std::size_t Type;
@@ -45,11 +45,20 @@ public:
 
     EntityWPtr GetEntity() { return this->entity; }
 
+    virtual void Start() = 0;
     virtual void Update() = 0;
     virtual void Render() = 0;
 
+    bool IsActive() { return this->active; }
+    bool IsInitialized() { return this->initialized; }
+    void SetActive(bool active);
+
 protected:
+    void Init();
+
     EntityWPtr entity;
+    bool active;
+    bool initialized;
 };
 
 } // namespace tomengine

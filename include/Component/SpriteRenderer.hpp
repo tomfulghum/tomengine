@@ -33,6 +33,7 @@ public:
     void SetSprite(SpritePtr sprite);
     void SetAnchorPosition(AnchorPosition anchor);
 
+    void Start() override;
     void Update() override {}
     void Render() override;
 
@@ -40,7 +41,6 @@ private:
     SpritePtr sprite;
     ShaderPtr shader;
     unsigned int vao;
-    bool initialized;
 
     void InitRenderData();
     void InitShader();

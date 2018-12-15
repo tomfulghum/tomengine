@@ -12,3 +12,11 @@ Behavior::Behavior() :
 Behavior::~Behavior()
 {
 }
+
+void Behavior::Start()
+{
+}
+
+void Behavior::Update()
+{
+}

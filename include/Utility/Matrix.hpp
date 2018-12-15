@@ -16,6 +16,8 @@ public:
     const unsigned int Rows() const { return this->rows; }
     T& Get(const unsigned int x, const unsigned int y);
     T& Get(const unsigned int i);
+    void Set(const unsigned int x, const unsigned int y, T& ref);
+    void Set(const unsigned int i, T& ref);
 
 private:
     std::vector<T> elements;
@@ -40,6 +42,18 @@ template <class T>
 T& Matrix<T>::Get(const unsigned int pI)
 {
     return elements[pI];
+}
+
+template <class T>
+void Matrix<T>::Set(const unsigned int pX, const unsigned int pY, T& pRef)
+{
+    elements[pX + (pY * this->rows)] = pRef;
+}
+
+template <class T>
+void Matrix<T>::Set(const unsigned int pI, T& pRef)
+{
+    elements[pI] = pRef;
 }
 
 } // namespace tomengine

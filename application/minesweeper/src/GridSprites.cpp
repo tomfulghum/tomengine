@@ -4,6 +4,7 @@
 
 #include "Common.hpp"
 #include "ResourceManager.hpp"
+#include "Sprite.hpp"
 #include "Texture2D.hpp"
 
 using namespace tomengine;
@@ -13,7 +14,7 @@ bool GridSprites::initialized = false;
 
 void GridSprites::Load()
 {
-    Texture2DPtr texNode = ResourceManager::LoadTexture2D("data/sprite/node.png", "sprite_node");
+    Texture2DPtr texNode = ResourceManager::LoadTexture2D("data/sprite/node.png", "Sprite_node_blank");
     Texture2DPtr texNodeFlagged = ResourceManager::LoadTexture2D("data/sprite/node_flagged.png", "Sprite_node_flagged");
     Texture2DPtr texNodeOpen1 = ResourceManager::LoadTexture2D("data/sprite/node_open_1.png", "Sprite_node_open_1");
     Texture2DPtr texNodeOpen2 = ResourceManager::LoadTexture2D("data/sprite/node_open_2.png", "Sprite_node_open_2");

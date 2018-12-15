@@ -17,7 +17,6 @@ COMPONENT_DEFINITION(Component, SpriteRenderer)
 SpriteRenderer::SpriteRenderer() :
     Component()
 {
-    this->initialized = false;
     this->InitRenderData();
     this->InitShader();
 }
@@ -31,6 +30,11 @@ SpriteRenderer::SpriteRenderer(SpritePtr pSprite) :
 void SpriteRenderer::SetSprite(SpritePtr pSprite)
 {
     this->sprite = pSprite;
+}
+
+void SpriteRenderer::Start()
+{
+    this->InitTexture();
 }
 
 void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
@@ -71,23 +75,19 @@ void SpriteRenderer::SetAnchorPosition(AnchorPosition pAnchor)
 
 void SpriteRenderer::Render()
 {
-    if (this->initialized) {
-        this->shader->Use();
+    this->shader->Use();
 
-        Texture2DPtr texture = this->sprite->GetTexture();
-        this->shader->SetMatrix4f("model", this->entity.lock()->GetTransformMatrix());
-        this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
-        this->shader->SetVector3f("tintColor", this->sprite->GetTint());
+    Texture2DPtr texture = this->sprite->GetTexture();
+    this->shader->SetMatrix4f("model", this->entity.lock()->GetTransformMatrix());
+    this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
+    this->shader->SetVector3f("tintColor", this->sprite->GetTint());
 
-        glActiveTexture(GL_TEXTURE0);
-        texture->Bind();
+    glActiveTexture(GL_TEXTURE0);
+    texture->Bind();
 
-        glBindVertexArray(this->vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
-    } else {
-        this->InitTexture();
-    }
+    glBindVertexArray(this->vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 
 void SpriteRenderer::InitRenderData()
@@ -189,8 +189,8 @@ void SpriteRenderer::InitTexture()
     if (ent && this->sprite) {
         Texture2DPtr texture = this->sprite->GetTexture();
         ent->SetBaseScale(texture->GetWidth(), texture->GetHeight());
-        texture->SetFilterMin(GL_NEAREST_MIPMAP_LINEAR);
-        texture->SetFilterMag(GL_NEAREST_MIPMAP_LINEAR);
+        texture->SetFilterMin(GL_NEAREST);
+        texture->SetFilterMag(GL_NEAREST);
 
         this->initialized = true;
     }

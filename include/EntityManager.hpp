@@ -15,6 +15,10 @@ public:
     static EntityPtr CreateEntity();
     static void RemoveEntity(EntityPtr entity);
 
+    static void InitEntities();
+    static void UpdateEntities();
+    static void RenderEntities();
+
 private:
     EntityManager();
 
