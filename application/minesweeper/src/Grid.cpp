@@ -8,6 +8,7 @@
 #include "Entity.hpp"
 #include "EntityManager.hpp"
 
+#include "Game.hpp"
 #include "GridNode.hpp"
 #include "GridSprites.hpp"
 
@@ -24,18 +25,25 @@ Grid::~Grid()
 
 void Grid::Generate(const int pMines)
 {
+    Game::squareCount = this->width * this->height;
+    Game::openSquares = 0;
+
     // Initialize nodes
     for (int i = 0; i < this->width; i++) {
         for (int j = 0; j < this->height; j++) {
-            EntityPtr node = EntityManager::CreateEntity();
-            node->AddComponent<SpriteRenderer>();
-            node->AddComponent<GridNode>(this, i, j, nodeSize);
-            node->SetParent(this);
+            if (matrix.Get(i, j) == nullptr) {
+                EntityPtr node = EntityManager::CreateEntity();
+                node->AddComponent<SpriteRenderer>();
+                node->AddComponent<GridNode>(this, i, j, nodeSize);
+                node->SetParent(this);
 
-            node->SetPosition(i * nodeSize, j * nodeSize);
-            node->GetComponent<SpriteRenderer>()->SetSprite(GridSprites::GetSprite(BLANK));
+                node->SetPosition(i * nodeSize, j * nodeSize);
+                node->GetComponent<SpriteRenderer>()->SetSprite(GridSprites::GetSprite(BLANK));
 
-            this->matrix.Set(i, j, node);
+                this->matrix.Set(i, j, node);
+            } else {
+                matrix.Get(i, j)->GetComponent<GridNode>()->Reset();
+            }
         }
     }
 

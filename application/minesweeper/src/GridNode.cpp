@@ -5,6 +5,7 @@
 #include "Entity.hpp"
 #include "Input.hpp"
 
+#include "Game.hpp"
 #include "GridSprites.hpp"
 
 using namespace tomengine;
@@ -27,22 +28,24 @@ void GridNode::Update()
     bool mouseover = false;
     glm::vec3 pixelPos = this->entity.lock()->GetPosition();
 
-    if (cursorPos.x >= pixelPos.x && cursorPos.x < pixelPos.x + this->size) {
-        if (cursorPos.y >= pixelPos.y && cursorPos.y < pixelPos.y + this->size) {
-            if (Input::GetMouseButtonDown(MOUSE_0)) {
-                std::cout << this->posX << " " << this->posY << " Mines: " << this->nearbyMines << std::endl;
+    if (Game::IsPlaying()) {
+        if (cursorPos.x >= pixelPos.x && cursorPos.x < pixelPos.x + this->size) {
+            if (cursorPos.y >= pixelPos.y && cursorPos.y < pixelPos.y + this->size) {
+                if (Input::GetMouseButtonDown(MOUSE_0)) {
+                    std::cout << this->posX << " " << this->posY << " Mines: " << this->nearbyMines << std::endl;
 
-                if (!this->open && !this->flagged) {
-                    this->Open();
-                }
-            } else if (Input::GetMouseButtonDown(MOUSE_1)) {
-                if (!this->open) {
-                    if (!this->flagged) {
-                        this->spriteRenderer->SetSprite(GridSprites::GetSprite(FLAGGED));
-                        this->flagged = true;
-                    } else {
-                        this->spriteRenderer->SetSprite(GridSprites::GetSprite(BLANK));
-                        this->flagged = false;
+                    if (!this->open && !this->flagged) {
+                        this->Open();
+                    }
+                } else if (Input::GetMouseButtonDown(MOUSE_1)) {
+                    if (!this->open) {
+                        if (!this->flagged) {
+                            this->spriteRenderer->SetSprite(GridSprites::GetSprite(FLAGGED));
+                            this->flagged = true;
+                        } else {
+                            this->spriteRenderer->SetSprite(GridSprites::GetSprite(BLANK));
+                            this->flagged = false;
+                        }
                     }
                 }
             }
@@ -59,7 +62,9 @@ void GridNode::Open()
         for (auto& mine : mines) {
             mine->GetComponent<GridNode>()->Reveal();
         }
+
         this->spriteRenderer->SetSprite(GridSprites::GetSprite(OPEN_MINE_CLICKED));
+        Game::Lose();
     } else if (this->nearbyMines == 0) {
         this->spriteRenderer->SetSprite(GridSprites::GetSprite(OPEN_BLANK));
 
@@ -73,6 +78,8 @@ void GridNode::Open()
     } else {
         this->spriteRenderer->SetSprite(GridSprites::GetSprite((NodeSprite)(FLAGGED + nearbyMines)));
     }
+
+    Game::openSquares++;
 }
 
 void GridNode::Reveal()
@@ -82,4 +89,12 @@ void GridNode::Reveal()
     if (this->mine) {
         this->spriteRenderer->SetSprite(GridSprites::GetSprite(OPEN_MINE));
     }
+}
+
+void GridNode::Reset()
+{
+    this->open = false;
+    this->flagged = false;
+    this->mine = false;
+    this->spriteRenderer->SetSprite(GridSprites::GetSprite(BLANK));
 }

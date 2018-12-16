@@ -78,16 +78,19 @@ void SpriteRenderer::Render()
     this->shader->Use();
 
     Texture2DPtr texture = this->sprite->GetTexture();
-    this->shader->SetMatrix4f("model", this->entity.lock()->GetTransformMatrix());
-    this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
-    this->shader->SetVector3f("tintColor", this->sprite->GetTint());
 
-    glActiveTexture(GL_TEXTURE0);
-    texture->Bind();
+    if (texture != nullptr) {
+        this->shader->SetMatrix4f("model", this->entity.lock()->GetTransformMatrix());
+        this->shader->SetMatrix4f("projection", Environment::OrthoProjectionMatrix());
+        this->shader->SetVector3f("tintColor", this->sprite->GetTint());
 
-    glBindVertexArray(this->vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+        glActiveTexture(GL_TEXTURE0);
+        texture->Bind();
+
+        glBindVertexArray(this->vao);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
 }
 
 void SpriteRenderer::InitRenderData()

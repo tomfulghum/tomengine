@@ -31,10 +31,14 @@ void Environment::SetApplication(ApplicationPtr pApp)
     app = pApp;
 }
 
-void Environment::SetWindowDimensions(int pWidth, int pHeight)
+void Environment::SetWindowDimensions(int pWidth, int pHeight, bool pResizable)
 {
     if (window) {
         glfwSetWindowSize(window, pWidth, pHeight);
+
+        if (!pResizable) {
+            glfwSetWindowSizeLimits(window, pWidth, pHeight, pWidth, pHeight);
+        }
     }
 }
 

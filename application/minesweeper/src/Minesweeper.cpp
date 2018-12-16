@@ -16,6 +16,7 @@
 #include "Time.hpp"
 #include "Transformable.hpp"
 
+#include "Game.hpp"
 #include "Grid.hpp"
 #include "GridSprites.hpp"
 
@@ -30,14 +31,23 @@ Minesweeper::~Minesweeper()
 {
 }
 
-const int GRID_WIDTH = 110;
-const int GRID_HEIGHT = 60;
+const int GRID_WIDTH = 9;
+const int GRID_HEIGHT = 9;
 const int SPRITE_SIZE = 16;
-const int MINE_COUNT = 250;
+const int MINE_COUNT = 10;
 
-//Texture2DPtr texMegumin;
-//EntityPtr entMegumin;
 GridPtr grid;
+
+EntityPtr entBorderPanel;
+EntityPtr entBorderLeft;
+EntityPtr entBorderRight;
+EntityPtr entBorderDown;
+EntityPtr entCornerLeftUp;
+EntityPtr entCornerLeftDown;
+EntityPtr entCornerRightUp;
+EntityPtr entCornerRightDown;
+EntityPtr entInterLeft;
+EntityPtr entInterRight;
 
 float rot = 0.0f;
 float scale = 0.0f;
@@ -46,34 +56,85 @@ void Minesweeper::Initialize()
 {
     std::cout << "Initialize Minesweeper!" << std::endl;
     Environment::SetWindowTitle("Minesweeper");
-    Environment::SetWindowDimensions(GRID_WIDTH * SPRITE_SIZE, GRID_HEIGHT * SPRITE_SIZE);
+    Environment::SetWindowDimensions(GRID_WIDTH * SPRITE_SIZE + 20, GRID_HEIGHT * SPRITE_SIZE + 56, false);
+
+    SpritePtr sprBorderPanel = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_panel.png", "borderPanel"));
+    SpritePtr sprBorderVertical = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_vertical.png", "borderVert"));
+    SpritePtr sprBorderHorizontal = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_horizontal.png", "borderHor"));
+    SpritePtr sprCornerLeftUp = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_corner_leftup.png", "borderCorLU"));
+    SpritePtr sprCornerLeftDown = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_corner_leftdown.png", "borderCorLD"));
+    SpritePtr sprCornerRightUp = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_corner_rightup.png", "borderCorRU"));
+    SpritePtr sprCornerRightDown = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_corner_rightdown.png", "borderCorRD"));
+    SpritePtr sprInterLeft = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_inter_left.png", "borderIntL"));
+    SpritePtr sprInterRight = std::make_shared<Sprite>(ResourceManager::LoadTexture2D("data/sprite/border_inter_right.png", "borderIntR"));
+
+    entBorderPanel = EntityManager::CreateEntity();
+    entBorderPanel->AddComponent<SpriteRenderer>();
+    entBorderPanel->GetComponent<SpriteRenderer>()->SetSprite(sprBorderPanel);
+    entBorderPanel->SetScale(GRID_WIDTH * SPRITE_SIZE + 20, 1.0f);
+
+    entBorderLeft = EntityManager::CreateEntity();
+    entBorderLeft->AddComponent<SpriteRenderer>();
+    entBorderLeft->GetComponent<SpriteRenderer>()->SetSprite(sprBorderVertical);
+    entBorderLeft->SetScale(1.0f, GRID_HEIGHT * SPRITE_SIZE + 56);
+
+    entBorderRight = EntityManager::CreateEntity();
+    entBorderRight->AddComponent<SpriteRenderer>();
+    entBorderRight->GetComponent<SpriteRenderer>()->SetSprite(sprBorderVertical);
+    entBorderRight->SetScale(1.0f, GRID_HEIGHT * SPRITE_SIZE + 56);
+    entBorderRight->SetPosition(GRID_WIDTH * SPRITE_SIZE + 10, 0.0f);
+
+    entBorderDown = EntityManager::CreateEntity();
+    entBorderDown->AddComponent<SpriteRenderer>();
+    entBorderDown->GetComponent<SpriteRenderer>()->SetSprite(sprBorderHorizontal);
+    entBorderDown->SetScale(GRID_WIDTH * SPRITE_SIZE + 20, 1.0f);
+    entBorderDown->SetPosition(0.0f, GRID_HEIGHT * SPRITE_SIZE + 46);
+
+    entCornerLeftUp = EntityManager::CreateEntity();
+    entCornerLeftUp->AddComponent<SpriteRenderer>();
+    entCornerLeftUp->GetComponent<SpriteRenderer>()->SetSprite(sprCornerLeftUp);
+
+    entCornerLeftDown = EntityManager::CreateEntity();
+    entCornerLeftDown->AddComponent<SpriteRenderer>();
+    entCornerLeftDown->GetComponent<SpriteRenderer>()->SetSprite(sprCornerLeftDown);
+    entCornerLeftDown->SetPosition(0.0f, GRID_HEIGHT * SPRITE_SIZE + 46);
+
+    entCornerRightUp = EntityManager::CreateEntity();
+    entCornerRightUp->AddComponent<SpriteRenderer>();
+    entCornerRightUp->GetComponent<SpriteRenderer>()->SetSprite(sprCornerRightUp);
+    entCornerRightUp->SetPosition(GRID_WIDTH * SPRITE_SIZE + 10, 0.0f);
+
+    entCornerRightDown = EntityManager::CreateEntity();
+    entCornerRightDown->AddComponent<SpriteRenderer>();
+    entCornerRightDown->GetComponent<SpriteRenderer>()->SetSprite(sprCornerRightDown);
+    entCornerRightDown->SetPosition(GRID_WIDTH * SPRITE_SIZE + 10, GRID_HEIGHT * SPRITE_SIZE + 46);
+
+    entInterLeft = EntityManager::CreateEntity();
+    entInterLeft->AddComponent<SpriteRenderer>();
+    entInterLeft->GetComponent<SpriteRenderer>()->SetSprite(sprInterLeft);
+    entInterLeft->SetPosition(0.0f, 36.0f);
+
+    entInterRight = EntityManager::CreateEntity();
+    entInterRight->AddComponent<SpriteRenderer>();
+    entInterRight->GetComponent<SpriteRenderer>()->SetSprite(sprInterRight);
+    entInterRight->SetPosition(GRID_WIDTH * SPRITE_SIZE + 10, 36.0f);
 
     GridSprites::Load();
 
-    //entMegumin = EntityManager::CreateEntity();
-    //texMegumin = ResourceManager::LoadTexture2D("data/sprite/brigitte.png", "Sprite_Megumin");
-    //SpritePtr spriteMegumin = std::make_shared<Sprite>(texMegumin);
-    //entMegumin->AddComponent<SpriteRenderer>(spriteMegumin);
-    //entMegumin->GetComponent<SpriteRenderer>().SetAnchorPosition(ANCHOR_MIDDLE);
-    //entMegumin->SetScale(0.0f, 0.0f);
-
     grid = std::make_shared<Grid>(GRID_WIDTH, GRID_HEIGHT, SPRITE_SIZE);
-    grid->SetPosition(GRID_WIDTH * SPRITE_SIZE / 2, GRID_HEIGHT * SPRITE_SIZE / 2);
-    grid->SetPivot(GRID_WIDTH * SPRITE_SIZE / 2, GRID_HEIGHT * SPRITE_SIZE / 2);
-    grid->Generate(MINE_COUNT);
+    grid->SetPosition(10.0f, 46.0f);
+
+    Game::mineCount = MINE_COUNT;
+    Game::grid = grid;
+    Game::Reset();
 
     EntityManager::InitEntities();
 }
 
 void Minesweeper::Update()
 {
-    //float xPos = Environment::WindowWidth() / 2.0f + (200.0f * std::sin(Time::RunTime()));
-    //float yPos = Environment::WindowHeight() / 2.0f + (200.0f * -std::cos(Time::RunTime()));
-    //entMegumin->SetPosition(xPos, yPos);
-    grid->SetRotation(rot += 100.0f * Time::DeltaTime());
-    //entMegumin->SetScale(scale += 0.1f * Time::DeltaTime(), scale);
-
     EntityManager::UpdateEntities();
+    Game::UpdateGameState();
 }
 
 void Minesweeper::Render()

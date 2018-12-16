@@ -23,7 +23,7 @@ public:
     static bool GetKey(int pKey);
 
     static void SetApplication(ApplicationPtr app);
-    static void SetWindowDimensions(int width, int height);
+    static void SetWindowDimensions(int width, int height, bool resizable);
     static void SetWindowTitle(const std::string& title);
 
     static int Initialize();

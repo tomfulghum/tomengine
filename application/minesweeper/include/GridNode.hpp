@@ -18,6 +18,7 @@ public:
 
     void Open();
     void Reveal();
+    void Reset();
 
     void Start() override;
     void Update() override;
